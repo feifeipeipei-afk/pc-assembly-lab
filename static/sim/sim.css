@@ -1,0 +1,121 @@
+/* ============================================================
+ * sim.css —— 模拟器考试公共样式（顶部状态条 / 成绩单）
+ * 两个模拟器共用。模拟器内部各自的皮肤（BIOS 蓝底、WinPE 桌面）
+ * 保持不变，本文件只负责"考试外壳"，不干扰仿真画面。
+ * ============================================================ */
+
+/* 顶部状态条是 fixed 的，需让页面内容整体下移，否则会盖住
+   WinPE 桌面左上角的图标、BIOS 顶部的题号栏。
+   实际留白由 sim_common.js 的 syncBarOffset() 按条高实时写入。 */
+body.has-simbar { padding-top: var(--simbar-h, 34px); }
+
+.sim-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; padding: 7px 16px;
+    background: rgba(25, 25, 25, .92); color: #fff;
+    font: 13px/1.5 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    backdrop-filter: blur(10px); box-shadow: 0 2px 12px rgba(0, 0, 0, .3);
+}
+.sim-bar .sim-who { font-weight: 600; }
+.sim-bar .sim-who::before { content: "👤 "; }
+
+.sim-clock {
+    font-variant-numeric: tabular-nums; font-weight: 700; font-size: 14px;
+    padding: 2px 12px; border-radius: 20px; background: rgba(255, 255, 255, .14);
+}
+.sim-clock.warning { background: #ffc300; color: #4a3800; }
+.sim-clock.danger { background: #fa5151; color: #fff; animation: simPulse 1s infinite; }
+@keyframes simPulse { 50% { opacity: .55; } }
+
+.sim-tipbar {
+    position: fixed; top: 40px; left: 0; right: 0; z-index: 8999;
+    padding: 9px 16px; text-align: center; font-size: 13px; line-height: 1.6;
+    background: #fff8e1; color: #7a5b00; border-bottom: 1px solid #ffe082;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.sim-tipbar.err { background: #fdecea; color: #a3211b; border-bottom-color: #f5c6c2; }
+.sim-tipbar.warn { background: #e8f4ff; color: #0a4d80; border-bottom-color: #b8dcff; }
+
+/* ---------------- 成绩单 ---------------- */
+.sim-result {
+    background: #fff; border-radius: 16px; padding: 26px 28px;
+    width: 100%; max-width: 760px; margin: 0 auto;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, .35);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #191919;
+}
+.sim-result-h { font-size: 21px; font-weight: 750; text-align: center; }
+.sim-result-h b { font-size: 34px; color: #07c160; }
+.sim-result.fail .sim-result-h b { color: #fa5151; }
+.sim-result-sub { text-align: center; color: #8a8a8a; font-size: 13px; margin-top: 8px; }
+
+.sim-steps { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 13px; }
+.sim-steps th {
+    background: #4472c4; color: #fff; font-weight: 600;
+    padding: 8px 10px; text-align: left;
+}
+.sim-steps th:first-child { border-radius: 6px 0 0 0; }
+.sim-steps th:last-child { border-radius: 0 6px 0 0; }
+.sim-steps td { padding: 7px 10px; border-bottom: 1px solid #ededed; }
+.sim-steps tr.ok td:first-child::before { content: "✔ "; color: #07c160; font-weight: 700; }
+.sim-steps tr.part td:first-child::before { content: "◐ "; color: #ffc300; font-weight: 700; }
+.sim-steps tr.no td:first-child::before { content: "✘ "; color: #fa5151; font-weight: 700; }
+.sim-steps tr.no td { background: #fffafa; }
+.sim-steps td:nth-child(2) { white-space: nowrap; text-align: center; font-variant-numeric: tabular-nums; }
+.sim-steps td:nth-child(3) { color: #5d5d5d; font-size: 12px; }
+
+.sim-warn {
+    margin-top: 14px; padding: 10px 12px; border-radius: 8px;
+    background: #fff8e1; color: #7a5b00; font-size: 12.5px; line-height: 1.7;
+}
+.sim-tip { margin-top: 14px; text-align: center; color: #8a8a8a; font-size: 12.5px; }
+
+/* ============================================================
+ * POST 自检 / 启动菜单 / 故障问答 通用浮层
+ * ============================================================ */
+.sim-overlay {
+    position: fixed; inset: 0; z-index: 9500;
+    display: flex; align-items: center; justify-content: center;
+    background: #000; padding: 24px;
+}
+
+/* POST 开机自检：黑底灰白等宽字，还原真机自检画面 */
+.post-screen {
+    width: 100%; max-width: 900px;
+    font: 15px/1.75 Consolas, "Courier New", monospace;
+    color: #d8d8d8; white-space: pre-wrap;
+    text-shadow: 0 0 8px rgba(200, 220, 255, .25);
+}
+.post-screen .err { color: #ff6b6b; font-weight: 700; }
+.post-screen .ok { color: #6bd88a; }
+.post-screen .hint { color: #ffc300; }
+
+/* 通用选择面板 */
+.sim-choice {
+    background: #0a1622; border: 2px solid #2a4a66; border-radius: 10px;
+    padding: 22px 26px; width: 100%; max-width: 620px; color: #d8e8f5;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.sim-choice h3 { margin: 0 0 6px; font-size: 17px; color: #5fd0ff; }
+.sim-choice .sub { color: #8fb8d8; font-size: 13px; margin-bottom: 16px; line-height: 1.7; }
+.sim-choice ul { list-style: none; padding: 0; margin: 0; }
+.sim-choice li {
+    padding: 11px 14px; margin-bottom: 9px; border: 1px solid #2a4a66;
+    border-radius: 7px; cursor: pointer; font-size: 14px; line-height: 1.6;
+}
+.sim-choice li:hover, .sim-choice li.sel {
+    background: #12354d; border-color: #5fd0ff; color: #fff;
+}
+.sim-choice li .k { color: #5fd0ff; font-weight: 700; margin-right: 8px; }
+.sim-choice .foot { margin-top: 14px; font-size: 12px; color: #7fa3bd; text-align: center; }
+
+/* 考试任务清单面板 */
+.exam-tasks {
+    margin-top: 10px; background: #fff; border: 1px solid #dbe7f2;
+    border-radius: 10px; padding: 12px 14px; font-size: 13px;
+}
+.exam-tasks .et-h { font-weight: 700; color: #0a4d80; margin-bottom: 8px; }
+.exam-tasks ol { margin: 0; padding-left: 20px; }
+.exam-tasks li { margin-bottom: 4px; line-height: 1.6; color: #33352f; }
+.exam-tasks .et-p { color: #8a8a8a; font-size: 12px; margin-left: 6px; }

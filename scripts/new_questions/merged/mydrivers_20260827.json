@@ -1,0 +1,154 @@
+[
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "据快科技报道，泰坦军团新款27寸显示器V27MQ7 MAX主打极致亮度与高刷新率，其峰值亮度高达多少？",
+    "options": ["300nits", "800nits", "1500nits", "3000nits"],
+    "answer": "D",
+    "explanation": "峰值亮度达3000nits，约为普通显示器（300-400nits）的近10倍；屏幕表面还经AGLR防眩低反处理，兼顾高亮与可视性。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "显示器参数中的「nits（尼特）」用来衡量什么指标？",
+    "options": ["响应时间", "亮度", "刷新率", "色域覆盖率"],
+    "answer": "B",
+    "explanation": "1尼特=1坎德拉/平方米，是亮度单位；普通桌面显示器的典型亮度约为300-400nits。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "狼蛛昆仑X5鼠标搭载自研SSHS电磁微动技术，主要为了解决传统机械微动的什么顽疾？",
+    "options": ["续航时间短", "连接不稳定", "双击故障", "重量过大"],
+    "answer": "C",
+    "explanation": "传统机械微动靠金属簧片物理接触导通，氧化磨损后易误触发「双击」；电磁微动无触点磨损，宣称可告别双击故障。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "游戏鼠标宣传的「8K回报率」中，回报率的单位是什么？",
+    "options": ["每分钟点击数", "蓝牙版本号", "电池循环次数", "每秒报告次数（Hz）"],
+    "answer": "D",
+    "explanation": "8K回报率即8000Hz，指鼠标每秒向电脑上报8000次位置数据，数值越高指针越跟手；昆仑X5支持双8K（有线/无线均为8K）。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "英伟达DLSS技术的核心作用是什么？",
+    "options": ["提升显卡供电效率", "降低显存占用", "AI超分辨率与帧生成", "优化散热噪音"],
+    "answer": "C",
+    "explanation": "DLSS利用AI将低分辨率画面重建为高分辨率画面并生成额外帧，在画质基本不损失的前提下大幅提升游戏帧率。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "英伟达确认DLSS 5将锁定RTX 50系列独占，因为它依赖哪一代GPU架构特有的硬件调度单元？",
+    "options": ["Ada Lovelace", "Ampere", "Turing", "Blackwell"],
+    "answer": "D",
+    "explanation": "RTX 50系列基于Blackwell架构，其特有硬件调度单元是DLSS 5三套AI模型的运行前提；RTX 4090为Ada Lovelace架构，无缘DLSS 5。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "近期哪家SSD厂商因「过保也免费换新」的服务被媒体报道为行业标杆？",
+    "options": ["西数（WD）", "美光", "金士顿", "三星"],
+    "answer": "A",
+    "explanation": "西数为已过保修期的SSD提供免费换新，甚至有用户480GB产品被升级换新为2TB；对比之下美光保内拒换引发争议。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "Win11下SATA与NVMe固态硬盘实测差距「出乎意料」，两者最根本的区别是什么？",
+    "options": ["SATA供电更省电", "NVMe走PCIe通道，带宽与延迟更优", "NVMe只能用于笔记本电脑", "SATA接口速度更快"],
+    "answer": "B",
+    "explanation": "SATA 3.0接口带宽上限约550MB/s，NVMe协议走PCIe通道可达数千MB/s；但日常开关机、办公场景中二者差距远小于理论跑分差距。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "砺算LX 7G100显卡被视为国产GPU的里程碑，因为它是什么产品？",
+    "options": ["100%全自研国产显卡", "AMD中国特供版", "英特尔贴牌产品", "矿卡翻新改装"],
+    "answer": "A",
+    "explanation": "砺算LX 7G100从GPU架构到驱动100%全自研，定位「能玩3A就已是成功」，是国产显卡的重要突破。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "英特尔锐炫Pro B70显卡面向生产力场景的最大卖点是什么？",
+    "options": ["32GB大显存", "售价全网最低", "无需外接供电", "集成CPU核心"],
+    "answer": "A",
+    "explanation": "锐炫Pro B70配备32GB大显存，可满足AI推理、三维渲染等专业生产力场景对显存容量的需求。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "LLVM/Clang编译器近期为AMD初代Zen架构CPU合入优化补丁，解决了哪组指令的性能瓶颈？",
+    "options": ["SSE/AVX", "MMX/SSE2", "PDEP/PEXT", "x87浮点"],
+    "answer": "C",
+    "explanation": "PDEP/PEXT位操作指令在Zen 1、Zen+、Zen 2上执行效率糟糕，编译器优化规避后，老锐龙CPU有望「性能回春」。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "NVIDIA最强台式机（DGX工作站）起售价64万元，仅内存就配备了多少容量？",
+    "options": ["64GB", "128GB", "748GB", "8GB"],
+    "answer": "C",
+    "explanation": "该工作站配备748GB内存，面向AI训练等专业场景，是普通家用电脑（16-32GB）内存的几十倍。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "小米自研手机芯片玄戒O3全球首发支持最新内存标准，这一成绩领先了哪些对手？",
+    "options": ["联发科与三星", "高通与苹果", "华为与紫光", "英特尔与AMD"],
+    "answer": "B",
+    "explanation": "玄戒O3领先高通与苹果全球首发新内存标准，标志着小米自研芯片进入行业第一梯队。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "酷睿Ultra 7 270K Plus被称为「迟到两年的性价比神U」，它的定位是什么？",
+    "options": ["功耗全平台最低", "集成最强核显", "免费赠送散热器", "以Ultra 7的价格获得超越Ultra 9的游戏性能"],
+    "answer": "D",
+    "explanation": "首发评测显示其游戏性能超越Ultra 9，但售价停留在Ultra 7档位，因此被称为性价比神U。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "微星CLAW 8 EX AI+掌机采用Intel方案，其性能领先AMD方案约多少？",
+    "options": ["4.2%", "42%", "402%", "0.42%"],
+    "answer": "B",
+    "explanation": "深度评测称其性能领先AMD方案42%，续航更是达到任天堂Switch的两倍。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "mc",
+    "question": "据爆料，华为Mate XT 2三折叠屏手机将改用哪种折叠方案？",
+    "options": ["U型折叠", "G型折叠", "Z字三折", "卷轴伸缩"],
+    "answer": "A",
+    "explanation": "下一代三折叠将采用U型折叠方案并改为横排后摄布局，外观较现款明显变化。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "tf",
+    "question": "英伟达DLSS 5技术可以完美运行在RTX 4090显卡上。",
+    "options": ["正确", "错误"],
+    "answer": "B",
+    "explanation": "错误。DLSS 5依赖Blackwell架构特有的硬件调度单元，RTX 4090（Ada Lovelace架构）无法支持。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "tf",
+    "question": "实测显示，SATA固态硬盘在Windows 11日常使用中与NVMe固态差距极大，普通用户必然能明显感知。",
+    "options": ["正确", "错误"],
+    "answer": "B",
+    "explanation": "错误。实测两者日常使用差距出乎意料地小，NVMe的优势主要体现在大文件连续读写等专业场景。"
+  },
+  {
+    "category": "硬件资讯与新品动态",
+    "q_type": "tf",
+    "question": "有用户将480GB的过保西数SSD送修，免费换新后拿到了2TB的产品。",
+    "options": ["正确", "错误"],
+    "answer": "A",
+    "explanation": "正确。西数近期为过保SSD提供免费换新服务，甚至出现容量升级换新的案例，被媒体称为行业标杆。"
+  }
+]

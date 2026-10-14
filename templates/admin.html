@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - 《计算机安装与维修》刷题系统</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2307c160'/%3E%3Cpath d='M16 7l3 6h-6zM9.5 20l2.5-5h8l2.5 5z' fill='%23fff'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/static/css/app.css">
+    <script src="/static/vendor/chart.umd.min.js"></script>
+    <style>
+        .app-header { position: sticky; top: 0; }
+        .header-right a { color: var(--primary-deep); text-decoration: none; font-size: 13px; font-weight: 550; }
+        .container { max-width: 1220px; margin: 0 auto; padding: 24px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 22px; }
+        .stat-card { background: #fff; border-radius: 16px; padding: 20px; box-shadow: var(--shadow-md); border: 1px solid rgba(0, 0, 0, 0.03); }
+        .stat-card .stat-label { font-size: 13px; color: var(--gray-500); margin-bottom: 4px; }
+        .stat-card .stat-value { font-size: 28px; font-weight: 750; color: var(--primary-deep); font-variant-numeric: tabular-nums; }
+        .stat-card .stat-value.green { color: var(--success); }
+        .stat-card .stat-value.orange { color: var(--warning-deep); }
+        .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 12px; }
+        .toolbar h2 { font-size: 17px; color: var(--gray-900); }
+        .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        .search-box {
+            padding: 9px 12px; border: 1px solid transparent; border-radius: 10px;
+            font-size: 13px; width: 200px; outline: none; background: #fff; font-family: inherit;
+        }
+        .search-box:focus { border-color: rgba(7, 193, 96, 0.55); box-shadow: 0 0 0 4px rgba(7, 193, 96, 0.10); }
+        .table-card { background: #fff; border-radius: 16px; box-shadow: var(--shadow-md); overflow: hidden; border: 1px solid rgba(0, 0, 0, 0.03); }
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+        thead th {
+            background: #fbfbfb; padding: 11px 14px; text-align: left;
+            font-weight: 600; color: var(--gray-700); border-bottom: 1px solid var(--gray-200); white-space: nowrap;
+        }
+        tbody td { padding: 9px 14px; border-bottom: 1px solid var(--gray-100); white-space: nowrap; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: var(--primary-light); }
+        .score-cell { font-weight: 600; font-variant-numeric: tabular-nums; }
+        .score-cell.excellent { color: var(--success); }
+        .score-cell.good { color: var(--primary-deep); }
+        .score-cell.pass { color: var(--warning-deep); }
+        .score-cell.fail { color: var(--danger); }
+        .status-badge { font-size: 12px; padding: 2px 9px; border-radius: 999px; font-weight: 600; }
+        .status-completed { background: var(--success-light); color: var(--success); }
+        .status-timeout { background: var(--warning-light); color: var(--warning-deep); }
+        .pagination {
+            display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            padding: 12px 16px; font-size: 13px; color: var(--gray-500); flex-wrap: wrap;
+        }
+        .page-controls { display: flex; align-items: center; gap: 6px; }
+        .page-btn {
+            min-width: 30px; height: 30px; padding: 0 8px; border-radius: 8px;
+            border: 1px solid var(--gray-200); background: #fff; color: var(--gray-700);
+            font-size: 13px; font-weight: 550; cursor: pointer; font-family: inherit; transition: all 0.15s;
+        }
+        .page-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary-deep); }
+        .page-btn.active { background: var(--primary-gradient); border-color: transparent; color: #fff; }
+        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .tabs { display: inline-flex; gap: 4px; margin-bottom: 22px; padding: 4px; border-radius: 13px; background: #fff; box-shadow: var(--shadow-md); border: 1px solid rgba(0, 0, 0, 0.03); }
+        .tab { padding: 9px 18px; font-size: 14px; font-weight: 600; cursor: pointer; color: var(--gray-500); border-radius: 10px; transition: all 0.2s; font-family: inherit; border: none; background: transparent; }
+        .tab:hover { color: var(--gray-900); }
+        .tab.active { color: var(--primary-deep); background: var(--primary-light); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 18px; margin-bottom: 22px; }
+        .chart-card { background: #fff; border-radius: 16px; padding: 20px; box-shadow: var(--shadow-md); border: 1px solid rgba(0, 0, 0, 0.03); }
+        .chart-card h3 { font-size: 14.5px; color: var(--gray-900); margin-bottom: 14px; }
+        .class-form { display: flex; gap: 8px; margin-bottom: 14px; align-items: center; }
+        .class-form input {
+            padding: 10px 12px; border: 1px solid transparent; border-radius: 10px;
+            font-size: 14px; outline: none; flex: 1; max-width: 320px; background: #fff; font-family: inherit;
+        }
+        .class-form input:focus { border-color: rgba(7, 193, 96, 0.55); box-shadow: 0 0 0 4px rgba(7, 193, 96, 0.10); }
+        .class-list { display: flex; flex-direction: column; gap: 8px; }
+        .class-item {
+            display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            padding: 13px 16px; background: #fff; border-radius: 13px;
+            box-shadow: var(--shadow); border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        .class-item .class-info { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .class-item .class-name { font-weight: 550; font-size: 14px; }
+        .class-item .class-count { font-size: 12px; color: var(--gray-500); }
+        .class-item .class-actions { display: flex; gap: 6px; flex-shrink: 0; }
+        .edit-input { padding: 7px 10px; border: 1px solid var(--primary); border-radius: 8px; font-size: 14px; outline: none; width: 220px; font-family: inherit; }
+        .btn-success { background: var(--success-light); color: var(--success); }
+        .btn-success:hover { background: #cdf2dd; }
+        .pwd-fields .form-group { margin-bottom: 14px; }
+
+        /* ---------------- 技能考试成绩 ---------------- */
+        .sim-chk { display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--gray-700); white-space:nowrap; }
+        .sim-stat { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px; }
+        .sim-stat .sc {
+            background:#fff; border:1px solid rgba(0,0,0,.03); border-radius:12px;
+            box-shadow: var(--shadow); padding:11px 16px; min-width:104px;
+        }
+        .sim-stat .sc .k { font-size:12px; color:var(--gray-500); }
+        .sim-stat .sc .v { font-size:20px; font-weight:750; color:var(--primary-deep); font-variant-numeric:tabular-nums; line-height:1.3; }
+        .manual-input {
+            width:64px; padding:4px 7px; text-align:center; font-size:13.5px;
+            border:1px solid var(--gray-200); border-radius:7px; font-family:inherit;
+            font-variant-numeric:tabular-nums;
+        }
+        .manual-input:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(7,193,96,.12); }
+        .manual-input.missing { border-color:var(--danger); background:#fff5f5; }
+        .miss-tag { color:var(--danger); font-size:12px; font-weight:600; }
+        .sim-drawer { max-width:760px; width:94vw; }
+        .sim-drawer-body { max-height:62vh; overflow:auto; font-size:13px; }
+        .sim-textarea {
+            width:100%; padding:10px 12px; border:1px solid var(--gray-200); border-radius:10px;
+            font-size:13.5px; font-family:Consolas,monospace; resize:vertical; box-sizing:border-box;
+        }
+        .sim-sec { margin-bottom:16px; }
+        .sim-sec > h4 { font-size:13.5px; margin-bottom:8px; color:var(--gray-900); }
+        .kv { display:flex; flex-wrap:wrap; gap:6px 20px; font-size:12.5px; color:var(--gray-500); margin-bottom:8px; }
+        .kv b { color:var(--gray-900); font-weight:600; }
+        .mini-table { width:100%; border-collapse:collapse; font-size:12.5px; }
+        .mini-table th { background:var(--gray-50); color:var(--gray-500); font-weight:600; text-align:left; padding:6px 8px; border-bottom:1px solid var(--gray-200); }
+        .mini-table td { padding:6px 8px; border-bottom:1px solid var(--gray-100); vertical-align:top; }
+        .mini-table tr.ok td:first-child::before { content:'✔ '; color:var(--primary-deep); }
+        .mini-table tr.part td:first-child::before { content:'◐ '; color:#d97706; }
+        .mini-table tr.no td:first-child::before { content:'✘ '; color:var(--danger); }
+        .mini-table td.g { text-align:center; white-space:nowrap; font-variant-numeric:tabular-nums; }
+        .timeline { max-height:210px; overflow:auto; border:1px solid var(--gray-200); border-radius:9px; padding:6px 10px; font-family:Consolas,monospace; font-size:12px; }
+        .timeline div { padding:2px 0; color:var(--gray-700); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .timeline .t { color:var(--gray-500); display:inline-block; width:70px; }
+        .timeline .k { color:var(--primary-deep); display:inline-block; width:44px; }
+
+        @media (max-width: 720px) {
+            .container { padding: 16px; }
+            .toolbar-actions { width: 100%; flex-wrap: wrap; }
+            .search-box { width: 100%; }
+            .tabs { display: flex; width: 100%; }
+            .tab { flex: 1; text-align: center; padding-left: 8px; padding-right: 8px; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .class-form { align-items: stretch; flex-direction: column; }
+            .class-form input { max-width: none; }
+        }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <h1><span class="logo-dot"></span>管理后台</h1>
+        <div class="header-right">
+            <a href="/">返回学生端</a>
+            <button class="btn btn-ghost btn-sm" onclick="showPwdModal()">修改密码</button>
+            <a href="/admin/logout">退出登录</a>
+        </div>
+    </header>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- 修改密码弹窗 -->
+    <div class="modal-overlay" id="pwdModal" aria-hidden="true">
+        <div class="modal pwd-fields" role="dialog" aria-modal="true" aria-labelledby="pwdTitle">
+            <h3 id="pwdTitle">修改管理密码</h3>
+            <form onsubmit="return changePassword(event)">
+                <div class="form-group">
+                    <label for="oldPwd">原密码</label>
+                    <input type="password" id="oldPwd" autocomplete="current-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPwd">新密码（至少 6 位）</label>
+                    <input type="password" id="newPwd" autocomplete="new-password" minlength="6" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPwd2">确认新密码</label>
+                    <input type="password" id="newPwd2" autocomplete="new-password" minlength="6" required>
+                </div>
+                <div class="error-msg" id="pwdError" style="text-align:left"></div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="closePwdModal()">取消</button>
+                    <button type="submit" class="btn btn-primary btn-sm">确认修改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 添加/编辑学生弹窗 -->
+    <div class="modal-overlay" id="stuModal" aria-hidden="true">
+        <div class="modal pwd-fields" role="dialog" aria-modal="true" aria-labelledby="stuModalTitle">
+            <h3 id="stuModalTitle">添加学生</h3>
+            <form onsubmit="return submitStudentForm(event)">
+                <div class="form-group">
+                    <label for="stuName">姓名</label>
+                    <input type="text" id="stuName" maxlength="20" required>
+                </div>
+                <div class="form-group">
+                    <label for="stuClass">班级</label>
+                    <select id="stuClass" required></select>
+                </div>
+                <div class="error-msg" id="stuModalError" style="text-align:left"></div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="closeStuModal()">取消</button>
+                    <button type="submit" class="btn btn-primary btn-sm" id="stuModalSubmit">添加</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 单人成绩明细抽屉 -->
+    <div class="modal-overlay" id="simDrawer" aria-hidden="true" onclick="if(event.target===this)closeSimDrawer()">
+        <div class="modal sim-drawer" role="dialog" aria-modal="true" aria-labelledby="simDrawerTitle">
+            <h3 id="simDrawerTitle">考生明细</h3>
+            <div id="simDrawerBody" class="sim-drawer-body">加载中...</div>
+            <div class="modal-buttons">
+                <button type="button" class="btn btn-outline btn-sm" onclick="closeSimDrawer()">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 批量录入实操分 -->
+    <div class="modal-overlay" id="simBulkModal" aria-hidden="true" onclick="if(event.target===this)closeSimBulk()">
+        <div class="modal" role="dialog" aria-modal="true">
+            <h3>批量录入实操装机分</h3>
+            <p>每行一条「姓名 分数」，空格、逗号或制表符分隔均可。<br>
+               例：<br>　张三 88<br>　李四,92<br>
+               姓名必须在花名册中存在；限定班级时只在该班内匹配。</p>
+            <select id="simBulkClass" class="search-box" style="width:100%;margin-bottom:10px">
+                <option value="">不限班级（全库匹配）</option>
+            </select>
+            <textarea id="simBulkText" rows="9" class="sim-textarea"
+                      placeholder="张三 88&#10;李四 92&#10;王五 75"></textarea>
+            <div class="error-msg" id="simBulkErr" style="text-align:left"></div>
+            <div class="modal-buttons">
+                <button type="button" class="btn btn-outline btn-sm" onclick="closeSimBulk()">取消</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="submitSimBulk()">导入</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 批量导入弹窗 -->
+    <div class="modal-overlay" id="bulkModal" aria-hidden="true">
+        <div class="modal pwd-fields" role="dialog" aria-modal="true" aria-labelledby="bulkTitle">
+            <h3 id="bulkTitle">批量导入学生</h3>
+            <form onsubmit="return submitBulkForm(event)">
+                <div class="form-group">
+                    <label for="bulkClass">导入到班级</label>
+                    <select id="bulkClass" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="bulkNames">学生名单（每行一个姓名）</label>
+                    <textarea id="bulkNames" rows="10" style="width:100%;padding:10px;border:1px solid var(--gray-200);border-radius:10px;font-family:inherit;font-size:14px" placeholder="张三&#10;李四&#10;王五" required></textarea>
+                </div>
+                <div class="error-msg" id="bulkError" style="text-align:left"></div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="closeBulkModal()">取消</button>
+                    <button type="submit" class="btn btn-primary btn-sm">导入</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 合并学生弹窗 -->
+    <div class="modal-overlay" id="mergeModal" aria-hidden="true">
+        <div class="modal pwd-fields" role="dialog" aria-modal="true" aria-labelledby="mergeTitle">
+            <h3 id="mergeTitle">合并重复账号</h3>
+            <form onsubmit="return submitMergeForm(event)">
+                <div class="form-group">
+                    <label for="mergeTarget">把「<span id="mergeSourceLabel" style="font-weight:600"></span>」的记录并入：</label>
+                    <select id="mergeTarget" required style="width:100%"></select>
+                </div>
+                <p style="font-size:12.5px;color:var(--gray-500);line-height:1.7">合并后源账号的答题记录、成绩与经验全部归入目标账号，源账号将被删除。此操作不可撤销。</p>
+                <div class="error-msg" id="mergeError" style="text-align:left"></div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="closeMergeModal()">取消</button>
+                    <button type="submit" class="btn btn-danger btn-sm">确认合并</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-label">注册学生</div><div class="stat-value" id="statTotal">-</div></div>
+            <div class="stat-card"><div class="stat-label">已参加考试</div><div class="stat-value green" id="statCompleted">-</div></div>
+            <div class="stat-card"><div class="stat-label">考试平均分</div><div class="stat-value orange" id="statAvg">-</div></div>
+            <div class="stat-card"><div class="stat-label">题库总量</div><div class="stat-value" id="statQuestions">-</div></div>
+        </div>
+
+        <div class="tabs" role="tablist" style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <div style="display:flex;gap:0;flex-wrap:wrap">
+                <button class="tab active" data-tab="scores" onclick="switchTab('scores')">成绩列表</button>
+                <button class="tab" data-tab="live" onclick="switchTab('live')">考试监控</button>
+                <button class="tab" data-tab="charts" onclick="switchTab('charts')">数据统计</button>
+                <button class="tab" data-tab="levels" onclick="switchTab('levels')">平时成绩</button>
+                <button class="tab" data-tab="sim" onclick="switchTab('sim')">技能考试成绩</button>
+                <button class="tab" data-tab="students" onclick="switchTab('students')">学生管理</button>
+                <button class="tab" data-tab="classes" onclick="switchTab('classes')">班级管理</button>
+            </div>
+            <button class="btn btn-outline btn-sm" id="syncBtn" onclick="syncQuestions()" title="题库文件有更新时（如定时任务合并新题），点击无需重启即可生效">⟳ 同步题库</button>
+        </div>
+
+        <!-- Tab: 考试监控 -->
+        <div class="tab-content" id="tab-live">
+            <div class="chart-card" style="margin-bottom:18px">
+                <h3 style="margin-bottom:10px">考试管控设置</h3>
+                <div style="display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap">
+                    <div>
+                        <label style="font-size:12.5px;color:var(--gray-500);display:block;margin-bottom:4px">开始时间（留空不限）</label>
+                        <input type="datetime-local" id="examWindowStart" class="search-box" style="width:auto">
+                    </div>
+                    <div>
+                        <label style="font-size:12.5px;color:var(--gray-500);display:block;margin-bottom:4px">结束时间（留空不限）</label>
+                        <input type="datetime-local" id="examWindowEnd" class="search-box" style="width:auto">
+                    </div>
+                    <div>
+                        <label style="font-size:12.5px;color:var(--gray-500);display:block;margin-bottom:4px">考试次数上限（0=不限）</label>
+                        <input type="number" id="examMaxAttempts" min="0" max="99" class="search-box" style="width:90px">
+                    </div>
+                    <button class="btn btn-primary" onclick="saveExamSettings()">保存设置</button>
+                    <button class="btn btn-outline" onclick="clearExamWindow()">清空时段</button>
+                </div>
+                <p style="font-size:12.5px;color:var(--gray-500);margin-top:10px" id="examStateHint">加载中...</p>
+            </div>
+
+            <div class="chart-card" style="margin-bottom:18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+                <div style="flex:1;min-width:280px">
+                    <h3 style="margin-bottom:8px">战斗竞技场（PVP/PVE 课间对战）</h3>
+                    <p style="font-size:12.5px;color:var(--gray-500);line-height:1.8" id="battleModeHint">加载中...</p>
+                </div>
+                <button class="btn btn-success" id="battleModeBtn" onclick="toggleBattleArena()">切换</button>
+            </div>
+
+            <div class="toolbar">
+                <h2>正在答题</h2>
+                <div class="toolbar-actions">
+                    <span id="liveServerTime" style="font-size:12.5px;color:var(--gray-500)"></span>
+                    <button class="btn btn-outline" onclick="loadLive()">立即刷新</button>
+                </div>
+            </div>
+            <div class="table-card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>班级</th><th>姓名</th><th>类型</th><th>进度</th>
+                                <th>切屏</th><th>开始时间</th><th>剩余时间</th>
+                            </tr>
+                        </thead>
+                        <tbody id="liveBody">
+                            <tr><td colspan="7" class="empty-state">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size:12px;color:var(--gray-500);padding:10px 14px">* 每 10 秒自动刷新。切屏次数为考试期间离开页面的次数，橙色 1~2 次（可能是误触），红色 3 次以上建议关注。</p>
+            </div>
+        </div>
+
+        <!-- Tab: 成绩列表 -->
+        <div class="tab-content active" id="tab-scores">
+            <div class="toolbar">
+                <h2>成绩列表</h2>
+                <div class="toolbar-actions">
+                    <input type="text" class="search-box" id="searchBox" placeholder="搜索姓名/班级...">
+                    <select id="modeFilter" class="search-box" style="width:auto">
+                        <option value="all">全部类型</option>
+                        <option value="exam">仅正式考试</option>
+                        <option value="practice">仅练习</option>
+                    </select>
+                    <button class="btn btn-outline" onclick="loadData()">刷新</button>
+                    <a href="/admin/export" class="btn btn-primary">导出 Excel</a>
+                </div>
+            </div>
+            <div class="table-card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>姓名</th><th>班级</th><th>类型</th><th>范围</th>
+                                <th>得分</th><th>总分</th><th>正确率</th>
+                                <th>提交时间</th><th>状态</th><th>切屏</th><th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr><td colspan="11" class="empty-state">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </div>
+
+        <!-- Tab: 数据统计 -->
+        <div class="tab-content" id="tab-charts">
+            <div class="charts-grid">
+                <div class="chart-card"><h3>成绩分布</h3><canvas id="scoreDistChart"></canvas></div>
+                <div class="chart-card"><h3>班级平均分对比</h3><canvas id="classAvgChart"></canvas></div>
+                <div class="chart-card"><h3>考试完成率</h3><canvas id="completionChart"></canvas></div>
+                <div class="chart-card"><h3>每日平均分趋势</h3><canvas id="trendChart"></canvas></div>
+            </div>
+            <p style="font-size:12px;color:var(--gray-500);margin-top:-10px">* 上方统计图表仅统计正式考试，练习不计入。</p>
+
+            <div class="toolbar" style="margin-top:20px">
+                <h2>学情分析</h2>
+                <div class="toolbar-actions">
+                    <select id="analyticsMode" class="search-box" style="width:auto">
+                        <option value="exam">仅考试数据</option>
+                        <option value="practice">仅练习数据</option>
+                        <option value="all">考试+练习</option>
+                    </select>
+                    <button class="btn btn-outline" onclick="loadAnalytics()">刷新</button>
+                </div>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-card" style="grid-column:1/-1">
+                    <h3>分类正确率（薄弱知识点排序）</h3>
+                    <div style="max-height:420px;overflow-y:auto"><canvas id="catAccChart"></canvas></div>
+                </div>
+            </div>
+            <div class="table-card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th><th>分类</th><th>题干</th>
+                                <th>错误人次</th><th>错它的学生数</th><th>其中空答</th>
+                            </tr>
+                        </thead>
+                        <tbody id="wrongTopBody">
+                            <tr><td colspan="6" class="empty-state">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size:12px;color:var(--gray-500);padding:10px 14px">* 高频错题 TOP20：空答多说明时间不够或直接放弃，错误多说明知识点普遍没掌握，可针对性课堂讲解。</p>
+            </div>
+
+            <div class="toolbar" style="margin-top:20px">
+                <h2>学生成长曲线</h2>
+                <div class="toolbar-actions">
+                    <select id="trendStudent" class="search-box" style="width:auto;max-width:280px">
+                        <option value="">选择学生...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3 id="trendTitle">考试正确率 与 累计经验</h3>
+                <canvas id="studentTrendChart" height="110"></canvas>
+            </div>
+        </div>
+
+        <!-- Tab: 平时成绩 -->
+        <div class="tab-content" id="tab-levels">
+            <div class="toolbar">
+                <h2>平时成绩（等级折算）</h2>
+                <div class="toolbar-actions">
+                    <span id="qualifiedSummary" style="font-size:13px;color:var(--gray-500)"></span>
+                    <button class="btn btn-outline" onclick="loadLevels()">刷新</button>
+                    <a href="/admin/export" class="btn btn-primary">导出 Excel</a>
+                </div>
+            </div>
+            <div class="chart-card" style="margin-bottom:18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+                <div style="flex:1;min-width:280px">
+                    <h3 style="margin-bottom:8px">合格等级设置</h3>
+                    <p style="font-size:12.5px;color:var(--gray-500);line-height:1.8" id="qualifyHint">加载中...</p>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <input type="number" id="qualifyInput" min="2" max="30" class="search-box" style="width:90px">
+                    <span style="font-size:13px;color:var(--gray-500)">级</span>
+                    <button class="btn btn-primary" onclick="saveQualifyLevel()">保存</button>
+                </div>
+            </div>
+            <div class="table-card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>班级</th><th>班级排名</th><th>姓名</th><th>段位</th>
+                                <th>等级</th><th>总经验</th><th>平时成绩</th><th>达标</th>
+                            </tr>
+                        </thead>
+                        <tbody id="levelsBody">
+                            <tr><td colspan="8" class="empty-state">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: 技能考试成绩 -->
+        <div class="tab-content" id="tab-sim">
+            <div class="toolbar">
+                <h2>技能考试成绩（总评）</h2>
+                <div class="toolbar-actions">
+                    <select id="simClassFilter" class="search-box" style="width:auto">
+                        <option value="">全部班级</option>
+                    </select>
+                    <input type="text" class="search-box" id="simSearchBox" placeholder="搜索姓名/学号...">
+                    <input type="number" id="simSwitchMin" class="search-box" style="width:96px" min="0" placeholder="切屏≥">
+                    <label class="sim-chk"><input type="checkbox" id="simOnlyMissing"> 仅看未录实操</label>
+                    <button class="btn btn-outline" onclick="loadSimSummary()">刷新</button>
+                    <button class="btn btn-outline" onclick="showSimBulk()">批量录实操</button>
+                    <button class="btn btn-outline" id="simFreezeBtn" onclick="toggleSimFreeze()">冻结平时分</button>
+                    <button class="btn btn-primary" onclick="exportSim()">导出 Excel</button>
+                </div>
+            </div>
+
+            <div class="sim-stat" id="simStat"></div>
+
+            <div class="table-card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>排名</th><th>学号</th><th>姓名</th><th>班级</th>
+                                <th>平时分<br><small>50%</small></th>
+                                <th>BIOS<br><small>12.5%</small></th>
+                                <th>WinPE<br><small>12.5%</small></th>
+                                <th>实操装机<br><small>25%</small></th>
+                                <th>考试分<br><small>50%</small></th>
+                                <th>总评</th><th>切屏<br><small>B/W</small></th><th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="simBody">
+                            <tr><td colspan="12" class="empty-state">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="chart-card" style="margin-top:18px">
+                <h3>计分规则</h3>
+                <p style="font-size:12.5px;color:var(--gray-500);line-height:1.9">
+                    总评 = 平时分 × 50% + 考试分 × 50%；
+                    考试分 = 实操装机 × 25% + BIOS 模拟 × 12.5% + WinPE 模拟 × 12.5%。<br>
+                    平时分来自刷题系统等级折算（实时读取，可点【冻结平时分】定格为快照）；
+                    BIOS / WinPE 由系统按操作事件自动判定；<b>实操装机分需教师现场评分后在此行内录入</b>，
+                    未录入时按 0 计并在表中标红提示。两个模拟考试限考 1 次，作废后学生可重考。
+                </p>
+            </div>
+        </div>
+
+        <!-- Tab: 学生管理 -->
+        <div class="tab-content" id="tab-students">
+            <div class="toolbar">
+                <h2>学生管理（花名册）</h2>
+                <div class="toolbar-actions">
+                    <input type="text" class="search-box" id="stuSearchBox" placeholder="搜索姓名/班级...">
+                    <select id="stuClassFilter" class="search-box" style="width:auto">
+                        <option value="">全部班级</option>
+                    </select>
+                    <button class="btn btn-outline" onclick="loadStudents()">刷新</button>
+                    <button class="btn btn-outline" onclick="showAddStudentModal()">添加学生</button>
+                    <button class="btn btn-primary" onclick="showBulkModal()">批量导入</button>
+                </div>
+            </div>
+            <div class="chart-card" style="margin-bottom:18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+                <div style="flex:1;min-width:280px">
+                    <h3 style="margin-bottom:8px">花名册模式</h3>
+                    <p style="font-size:12.5px;color:var(--gray-500);line-height:1.8" id="rosterModeHint">加载中...</p>
+                </div>
+                <button class="btn btn-success" id="rosterModeBtn" onclick="toggleRosterMode()">切换</button>
+            </div>
+            <div class="table-card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>班级</th><th>姓名</th><th>段位</th><th>等级</th>
+                                <th>总经验</th><th>考试次数</th><th>最近活跃</th><th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsBody">
+                            <tr><td colspan="8" class="empty-state">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: 班级管理 -->
+        <div class="tab-content" id="tab-classes">
+            <div class="toolbar"><h2>班级管理</h2></div>
+            <div class="class-form">
+                <input type="text" id="newClassName" placeholder="输入班级名称，如：2025级计算机1班" maxlength="40">
+                <button class="btn btn-primary" onclick="addClass()">添加班级</button>
+            </div>
+            <div class="class-list" id="classList">
+                <div class="empty-state"><p>加载中...</p></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    let allSessions = [];
+    let searchText = '';
+    let modeFilter = 'all';
+    let pageNo = 1;
+    const PAGE_SIZE = 20;
+    let chartInstances = {};
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>"']/g, ch => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[ch]));
+    }
+
+    // ==================== 同步题库 ====================
+    async function syncQuestions() {
+        const btn = document.getElementById('syncBtn');
+        btn.disabled = true;
+        const original = btn.textContent;
+        btn.textContent = '同步中...';
+        try {
+            const res = await fetch('/admin/sync_questions', { method: 'POST' });
+            const data = await res.json();
+            showToast(data.message || (data.success ? '同步完成' : '同步失败'));
+            if (data.success) {
+                const statQ = document.getElementById('statQuestions');
+                if (statQ && data.total !== undefined) statQ.textContent = data.total;
+            }
+        } catch (err) {
+            showToast('网络错误，请重试');
+        }
+        btn.disabled = false;
+        btn.textContent = original;
+    }
+
+    // ==================== 修改密码 ====================
+    function showPwdModal() {
+        document.getElementById('pwdError').textContent = '';
+        ['oldPwd', 'newPwd', 'newPwd2'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('pwdModal').classList.add('show');
+        document.getElementById('oldPwd').focus();
+    }
+    function closePwdModal() { document.getElementById('pwdModal').classList.remove('show'); }
+    document.getElementById('pwdModal').addEventListener('click', e => {
+        if (e.target === e.currentTarget) closePwdModal();
+    });
+
+    async function changePassword(e) {
+        e.preventDefault();
+        const errEl = document.getElementById('pwdError');
+        const oldPwd = document.getElementById('oldPwd').value;
+        const newPwd = document.getElementById('newPwd').value;
+        const newPwd2 = document.getElementById('newPwd2').value;
+        errEl.textContent = '';
+        if (newPwd !== newPwd2) { errEl.textContent = '两次输入的新密码不一致'; return false; }
+        try {
+            const res = await fetch('/admin/change_password', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ old_password: oldPwd, new_password: newPwd })
+            });
+            const data = await res.json();
+            if (data.success) { closePwdModal(); showToast('密码已更新，请妥善保管'); }
+            else errEl.textContent = data.message;
+        } catch (err) { errEl.textContent = '网络错误，请重试'; }
+        return false;
+    }
+
+    let liveTimer = null;
+    let activeTab = 'scores';
+
+    function switchTab(tab) {
+        activeTab = tab;
+        if (liveTimer) { clearInterval(liveTimer); liveTimer = null; }
+        document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === 'tab-' + tab));
+        if (tab === 'charts') loadStatistics();
+        if (tab === 'classes') loadClasses();
+        if (tab === 'levels') loadLevels();
+        if (tab === 'students') loadStudents();
+        if (tab === 'sim') loadSimSummary();
+        if (tab === 'live') {
+            loadLive();
+            liveTimer = setInterval(() => { if (activeTab === 'live') loadLive(); }, 10000);
+        }
+    }
+
+    // ==================== 考试监控 ====================
+
+    function dtLocalToValue(v) {
+        // 'YYYY-MM-DD HH:MM' -> 'YYYY-MM-DDTHH:MM'（datetime-local 控件格式）
+        return v ? v.replace(' ', 'T') : '';
+    }
+
+    function dtValueToLocal(v) {
+        // 'YYYY-MM-DDTHH:MM' -> 'YYYY-MM-DD HH:MM'
+        return v ? v.replace('T', ' ') : '';
+    }
+
+    async function loadLive() {
+        try {
+            const res = await fetch('/admin/live');
+            const data = await res.json();
+            if (!data.success) throw new Error();
+            document.getElementById('examWindowStart').value = dtLocalToValue(data.window.start);
+            document.getElementById('examWindowEnd').value = dtLocalToValue(data.window.end);
+            document.getElementById('examMaxAttempts').value = data.max_attempts;
+            const hint = document.getElementById('examStateHint');
+            if (data.window.state === null) {
+                hint.textContent = '当前未设置考试时段：学生随时可以开考。设置时段后，时段外只能练习。';
+            } else if (data.window.state === 'open') {
+                hint.innerHTML = `<span style="color:var(--success);font-weight:650">● 考试窗口进行中</span>　${escapeHtml(data.window.hint)}　次数上限：${data.max_attempts === 0 ? '不限' : data.max_attempts + ' 次'}`;
+            } else {
+                hint.innerHTML = `<span style="color:#d97706;font-weight:650">● ${data.window.state === 'before' ? '未到考试时间' : '考试已结束'}</span>　${escapeHtml(data.window.hint)}　时段外学生只能做练习`;
+            }
+            document.getElementById('liveServerTime').textContent = '服务器时间：' + (data.server_time || '');
+            renderBattleMode(!!data.battle_enabled);
+            renderLive(data.sessions);
+        } catch (err) {
+            showToast('加载考试监控失败');
+        }
+    }
+
+    function renderBattleMode(enabled) {
+        const hint = document.getElementById('battleModeHint');
+        const btn = document.getElementById('battleModeBtn');
+        if (enabled) {
+            hint.innerHTML = '已开启：学生可在课间进入战斗竞技场（闯关 / 挑战同学影子 / 训练假人）。<br>战斗模式答对照常发经验（防刷规则同样生效），三星关卡折算平时成绩加成，最多 +5 分。';
+            btn.textContent = '关闭竞技场';
+            btn.className = 'btn btn-outline';
+        } else {
+            hint.innerHTML = '已关闭：学生端隐藏竞技场入口，进行中的战斗可继续完成。<br>适合期末考试周等需要收心的时段；平时建议开启。';
+            btn.textContent = '开启竞技场';
+            btn.className = 'btn btn-success';
+        }
+    }
+
+    async function toggleBattleArena() {
+        const btn = document.getElementById('battleModeBtn');
+        const next = btn.textContent.includes('开启');
+        if (!confirm(next ? '开启后学生可在课间进行 PVP/PVE 对战（答对经验照常发放），确定开启？'
+                          : '关闭后学生端将隐藏战斗竞技场入口，确定关闭？')) return;
+        try {
+            const res = await fetch('/admin/settings', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ battle_enabled: next })
+            });
+            const data = await res.json();
+            if (data.success) { showToast(data.message); renderBattleMode(next); }
+        } catch (err) { showToast('操作失败'); }
+    }
+
+    function renderLive(sessions) {
+        const tbody = document.getElementById('liveBody');
+        if (!sessions.length) {
+            tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><p>当前没有正在进行的答题</p></td></tr>';
+            return;
+        }
+        tbody.innerHTML = sessions.map(s => {
+            const isPractice = (s.mode || 'exam') === 'practice';
+            const modeBadge = isPractice
+                ? '<span class="badge badge-practice">练习</span>'
+                : '<span class="badge badge-exam">考试</span>';
+            const sw = s.switch_count || 0;
+            let switchCell;
+            if (isPractice) switchCell = '<span style="color:var(--gray-300)">-</span>';
+            else if (sw === 0) switchCell = '<span style="color:var(--gray-300)">0</span>';
+            else if (sw < 3) switchCell = `<span style="color:#d97706;font-weight:650">${sw}</span>`;
+            else switchCell = `<span style="color:#dc2626;font-weight:700">${sw}</span>`;
+            const remain = s.remain_min === null ? '-'
+                : (s.remain_min <= 5 ? `<span style="color:#dc2626;font-weight:700">${s.remain_min} 分钟</span>` : `${s.remain_min} 分钟`);
+            return `<tr>
+                <td>${escapeHtml(s.class_name || '-')}</td>
+                <td>${escapeHtml(s.name)}</td>
+                <td>${modeBadge}</td>
+                <td>${s.answered} / ${s.total}</td>
+                <td>${switchCell}</td>
+                <td>${escapeHtml((s.started_at || '').substring(0, 16))}</td>
+                <td>${isPractice ? '不限时' : remain}</td>
+            </tr>`;
+        }).join('');
+    }
+
+    async function saveExamSettings() {
+        const start = dtValueToLocal(document.getElementById('examWindowStart').value);
+        const end = dtValueToLocal(document.getElementById('examWindowEnd').value);
+        let maxAtt = parseInt(document.getElementById('examMaxAttempts').value, 10);
+        if (isNaN(maxAtt) || maxAtt < 0) maxAtt = 0;
+        try {
+            const res = await fetch('/admin/settings', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ exam_window_start: start, exam_window_end: end, exam_max_attempts: maxAtt })
+            });
+            const data = await res.json();
+            if (data.success) { showToast(data.message); loadLive(); }
+            else showToast(data.message || '保存失败');
+        } catch (err) { showToast('保存失败'); }
+    }
+
+    function clearExamWindow() {
+        document.getElementById('examWindowStart').value = '';
+        document.getElementById('examWindowEnd').value = '';
+        saveExamSettings();
+    }
+
+    // ==================== 学生管理（花名册） ====================
+    let allStudents = [];
+    let studentClasses = [];
+    let editingStudentId = null;
+    let mergingSourceId = null;
+    let currentRosterMode = true;
+
+    function fillClassSelect(selectEl, includeEmpty) {
+        selectEl.innerHTML = '';
+        if (includeEmpty) {
+            const opt = document.createElement('option');
+            opt.value = '';
+            opt.textContent = '全部班级';
+            selectEl.appendChild(opt);
+        }
+        studentClasses.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c;
+            opt.textContent = c;
+            selectEl.appendChild(opt);
+        });
+    }
+
+    async function loadStudents() {
+        try {
+            const res = await fetch('/admin/students');
+            const data = await res.json();
+            if (!data.success) throw new Error();
+            allStudents = data.students;
+            currentRosterMode = !!data.roster_mode;
+            studentClasses = [...new Set(allStudents.map(s => s.class_name).filter(Boolean))].sort();
+            const filter = document.getElementById('stuClassFilter');
+            const prev = filter.value;
+            fillClassSelect(filter, true);
+            if (prev && studentClasses.includes(prev)) filter.value = prev;
+            renderRosterMode();
+            renderStudents();
+        } catch (err) {
+            showToast('加载学生列表失败');
+        }
+    }
+
+    function renderRosterMode() {
+        const hint = document.getElementById('rosterModeHint');
+        const btn = document.getElementById('rosterModeBtn');
+        if (currentRosterMode) {
+            hint.innerHTML = '已开启：学生只能使用下方名单内的账号登录，名单外的姓名将被拒绝。<br>关闭后学生可自行输入姓名注册（不建议在有捣乱风险的班级使用）。';
+            btn.textContent = '关闭花名册模式';
+            btn.className = 'btn btn-outline';
+        } else {
+            hint.innerHTML = '已关闭：学生可自行输入姓名注册登录。<br>建议开启以防止冒名答题和恶搞账号。';
+            btn.textContent = '开启花名册模式';
+            btn.className = 'btn btn-success';
+        }
+    }
+
+    async function toggleRosterMode() {
+        const next = !currentRosterMode;
+        if (!confirm(next ? '开启花名册模式后，名单外的学生将无法登录，确定开启？'
+                           : '关闭花名册模式后，任何人都可用任意姓名注册，确定关闭？')) return;
+        try {
+            const res = await fetch('/admin/settings', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ roster_mode: next })
+            });
+            const data = await res.json();
+            if (data.success) { showToast(data.message); loadStudents(); }
+        } catch (err) { showToast('操作失败'); }
+    }
+
+    function filteredStudents() {
+        let filtered = allStudents;
+        const cls = document.getElementById('stuClassFilter').value;
+        const q = document.getElementById('stuSearchBox').value.trim().toLowerCase();
+        if (cls) filtered = filtered.filter(s => s.class_name === cls);
+        if (q) filtered = filtered.filter(s =>
+            (s.name || '').toLowerCase().includes(q) ||
+            (s.class_name || '').toLowerCase().includes(q));
+        return filtered;
+    }
+
+    function renderStudents() {
+        const tbody = document.getElementById('studentsBody');
+        const list = filteredStudents();
+        if (list.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" class="empty-state"><p>暂无学生，点击右上角"添加学生"或"批量导入"</p></td></tr>';
+            return;
+        }
+        tbody.innerHTML = list.map(s => `
+            <tr>
+                <td>${escapeHtml(s.class_name || '-')}</td>
+                <td>${escapeHtml(s.name)}</td>
+                <td>${escapeHtml(s.level_name)}</td>
+                <td>Lv.${s.level}</td>
+                <td>${s.total_xp}</td>
+                <td>${s.exam_count}</td>
+                <td>${s.last_active ? escapeHtml(s.last_active.substring(0, 16)) : '从未答题'}</td>
+                <td style="white-space:nowrap">
+                    <button class="btn btn-outline btn-sm" onclick="showEditStudentModal(${s.id})">编辑</button>
+                    <button class="btn btn-outline btn-sm" onclick="showMergeModal(${s.id})">并入...</button>
+                    <button class="btn btn-outline btn-sm" onclick="resetStudentXp(${s.id}, '${escapeHtml(s.name)}')">清经验</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteStudent(${s.id}, '${escapeHtml(s.class_name)}·${escapeHtml(s.name)}')">删除</button>
+                </td>
+            </tr>`).join('');
+    }
+
+    document.getElementById('stuSearchBox').addEventListener('input', renderStudents);
+    document.getElementById('stuClassFilter').addEventListener('change', renderStudents);
+
+    function showAddStudentModal() {
+        editingStudentId = null;
+        document.getElementById('stuModalTitle').textContent = '添加学生';
+        document.getElementById('stuModalSubmit').textContent = '添加';
+        document.getElementById('stuName').value = '';
+        document.getElementById('stuModalError').textContent = '';
+        fillClassSelect(document.getElementById('stuClass'), false);
+        document.getElementById('stuModal').classList.add('show');
+        document.getElementById('stuName').focus();
+    }
+
+    function showEditStudentModal(id) {
+        const s = allStudents.find(x => x.id === id);
+        if (!s) return;
+        editingStudentId = id;
+        document.getElementById('stuModalTitle').textContent = '编辑学生';
+        document.getElementById('stuModalSubmit').textContent = '保存';
+        document.getElementById('stuName').value = s.name;
+        document.getElementById('stuModalError').textContent = '';
+        fillClassSelect(document.getElementById('stuClass'), false);
+        document.getElementById('stuClass').value = s.class_name;
+        document.getElementById('stuModal').classList.add('show');
+    }
+
+    function closeStuModal() { document.getElementById('stuModal').classList.remove('show'); }
+    document.getElementById('stuModal').addEventListener('click', e => {
+        if (e.target === e.currentTarget) closeStuModal();
+    });
+
+    async function submitStudentForm(e) {
+        e.preventDefault();
+        const name = document.getElementById('stuName').value.trim();
+        const class_name = document.getElementById('stuClass').value;
+        if (!name || !class_name) return false;
+        const errEl = document.getElementById('stuModalError');
+        errEl.textContent = '';
+        try {
+            const url = editingStudentId ? `/admin/students/${editingStudentId}` : '/admin/students';
+            const res = await fetch(url, {
+                method: editingStudentId ? 'PUT' : 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, class_name })
+            });
+            const data = await res.json();
+            if (data.success) {
+                closeStuModal();
+                showToast(data.message);
+                loadStudents();
+                loadData();
+            } else {
+                errEl.textContent = data.message || '操作失败';
+            }
+        } catch (err) { errEl.textContent = '网络错误，请重试'; }
+        return false;
+    }
+
+    function showBulkModal() {
+        document.getElementById('bulkNames').value = '';
+        document.getElementById('bulkError').textContent = '';
+        fillClassSelect(document.getElementById('bulkClass'), false);
+        const filterVal = document.getElementById('stuClassFilter').value;
+        if (filterVal) document.getElementById('bulkClass').value = filterVal;
+        document.getElementById('bulkModal').classList.add('show');
+    }
+
+    function closeBulkModal() { document.getElementById('bulkModal').classList.remove('show'); }
+    document.getElementById('bulkModal').addEventListener('click', e => {
+        if (e.target === e.currentTarget) closeBulkModal();
+    });
+
+    async function submitBulkForm(e) {
+        e.preventDefault();
+        const class_name = document.getElementById('bulkClass').value;
+        const names = document.getElementById('bulkNames').value.split('\n').map(n => n.trim()).filter(Boolean);
+        if (!class_name || !names.length) return false;
+        const errEl = document.getElementById('bulkError');
+        errEl.textContent = '';
+        try {
+            const res = await fetch('/admin/students/bulk', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ class_name, names })
+            });
+            const data = await res.json();
+            if (data.success) {
+                closeBulkModal();
+                showToast(data.message);
+                loadStudents();
+                loadData();
+            } else {
+                errEl.textContent = data.message || '导入失败';
+            }
+        } catch (err) { errEl.textContent = '网络错误，请重试'; }
+        return false;
+    }
+
+    async function deleteStudent(id, label) {
+        if (!confirm(`确定删除学生「${label}」？\n其全部答题记录、成绩与经验将被一并删除，不可恢复。`)) return;
+        try {
+            const res = await fetch(`/admin/students/${id}`, { method: 'DELETE' });
+            const data = await res.json();
+            if (data.success) { showToast(data.message); loadStudents(); loadData(); }
+            else showToast(data.message || '删除失败');
+        } catch (err) { showToast('删除失败'); }
+    }
+
+    async function resetStudentXp(id, name) {
+        if (!confirm(`确定清零「${name}」的全部经验？\n答题记录保留，等级与平时成绩将回到 1 级。`)) return;
+        try {
+            const res = await fetch(`/admin/students/${id}/reset_xp`, { method: 'POST' });
+            const data = await res.json();
+            if (data.success) { showToast(data.message); loadStudents(); }
+            else showToast(data.message || '操作失败');
+        } catch (err) { showToast('操作失败'); }
+    }
+
+    function showMergeModal(sourceId) {
+        const src = allStudents.find(x => x.id === sourceId);
+        if (!src) return;
+        mergingSourceId = sourceId;
+        document.getElementById('mergeSourceLabel').textContent = `${src.class_name}·${src.name}`;
+        document.getElementById('mergeError').textContent = '';
+        const sel = document.getElementById('mergeTarget');
+        sel.innerHTML = allStudents
+            .filter(x => x.id !== sourceId)
+            .map(x => `<option value="${x.id}">${escapeHtml(x.class_name)} · ${escapeHtml(x.name)}</option>`)
+            .join('');
+        document.getElementById('mergeModal').classList.add('show');
+    }
+
+    function closeMergeModal() { document.getElementById('mergeModal').classList.remove('show'); }
+    document.getElementById('mergeModal').addEventListener('click', e => {
+        if (e.target === e.currentTarget) closeMergeModal();
+    });
+
+    async function submitMergeForm(e) {
+        e.preventDefault();
+        const targetId = parseInt(document.getElementById('mergeTarget').value, 10);
+        if (!mergingSourceId || !targetId) return false;
+        const errEl = document.getElementById('mergeError');
+        errEl.textContent = '';
+        try {
+            const res = await fetch('/admin/students/merge', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ source_id: mergingSourceId, target_id: targetId })
+            });
+            const data = await res.json();
+            if (data.success) {
+                closeMergeModal();
+                showToast(data.message);
+                loadStudents();
+                loadData();
+            } else {
+                errEl.textContent = data.message || '合并失败';
+            }
+        } catch (err) { errEl.textContent = '网络错误，请重试'; }
+        return false;
+    }
+
+    // ==================== 成绩列表 ====================
+    async function loadData() {
+        try {
+            const res = await fetch('/admin/data');
+            const data = await res.json();
+            document.getElementById('statTotal').textContent = data.stats.total_students;
+            document.getElementById('statCompleted').textContent = data.stats.completed_count;
+            document.getElementById('statAvg').textContent = data.stats.avg_score + '%';
+            document.getElementById('statQuestions').textContent = data.stats.question_count;
+            allSessions = data.sessions;
+            renderTable();
+        } catch (err) {
+            showToast('加载数据失败');
+        }
+    }
+
+    function filteredSessions() {
+        let filtered = allSessions;
+        if (modeFilter !== 'all') {
+            filtered = filtered.filter(s => (s.mode || 'exam') === modeFilter);
+        }
+        if (searchText) {
+            const q = searchText.toLowerCase();
+            filtered = filtered.filter(s =>
+                (s.name || '').toLowerCase().includes(q) ||
+                (s.class_name || '').toLowerCase().includes(q)
+            );
+        }
+        return filtered;
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('tableBody');
+        const filtered = filteredSessions();
+        const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+        if (pageNo > totalPages) pageNo = totalPages;
+        const pageItems = filtered.slice((pageNo - 1) * PAGE_SIZE, pageNo * PAGE_SIZE);
+
+        if (pageItems.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="11" class="empty-state"><p>暂无记录</p></td></tr>';
+            renderPagination(0, totalPages);
+            return;
+        }
+        tbody.innerHTML = pageItems.map(s => {
+            const pct = s.total > 0 ? Math.round(s.score / s.total * 100) : 0;
+            const scoreClass = pct >= 90 ? 'excellent' : pct >= 75 ? 'good' : pct >= 60 ? 'pass' : 'fail';
+            const statusClass = s.status === 'completed' ? 'status-completed' : 'status-timeout';
+            const statusText = s.status === 'completed' ? '已完成' : '已超时';
+            const isPractice = (s.mode || 'exam') === 'practice';
+            const modeBadge = isPractice
+                ? '<span class="badge badge-practice">练习</span>'
+                : '<span class="badge badge-exam">考试</span>';
+            const sw = s.switch_count || 0;
+            let switchCell;
+            if (isPractice) switchCell = '<span style="color:var(--gray-300)">-</span>';
+            else if (sw === 0) switchCell = '<span style="color:var(--gray-300)">0</span>';
+            else if (sw < 3) switchCell = `<span style="color:#d97706;font-weight:650">${sw}</span>`;
+            else switchCell = `<span style="color:#dc2626;font-weight:700">${sw}</span>`;
+            return `<tr>
+                <td>${escapeHtml(s.name)}</td>
+                <td>${escapeHtml(s.class_name || '-')}</td>
+                <td>${modeBadge}</td>
+                <td style="max-width:130px;overflow:hidden;text-overflow:ellipsis">${escapeHtml(s.label || '-')}</td>
+                <td class="score-cell ${scoreClass}">${s.score}</td>
+                <td>${s.total}</td>
+                <td class="score-cell ${scoreClass}">${pct}%</td>
+                <td>${escapeHtml((s.submitted_at || '').replace('T', ' ').substring(0, 16))}</td>
+                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                <td>${switchCell}</td>
+                <td><button class="btn btn-danger btn-sm" onclick="deleteSession(${s.id})">删除</button></td>
+            </tr>`;
+        }).join('');
+        renderPagination(filtered.length, totalPages);
+    }
+
+    function renderPagination(total, totalPages) {
+        const el = document.getElementById('pagination');
+        if (total === 0) { el.innerHTML = ''; return; }
+        let pages = '';
+        const start = Math.max(1, pageNo - 2);
+        const end = Math.min(totalPages, start + 4);
+        pages += `<button class="page-btn" onclick="gotoPage(${pageNo - 1})" ${pageNo === 1 ? 'disabled' : ''}>‹</button>`;
+        if (start > 1) pages += `<button class="page-btn" onclick="gotoPage(1)">1</button>${start > 2 ? '<span>…</span>' : ''}`;
+        for (let p = start; p <= end; p++) {
+            pages += `<button class="page-btn ${p === pageNo ? 'active' : ''}" onclick="gotoPage(${p})">${p}</button>`;
+        }
+        if (end < totalPages) pages += `${end < totalPages - 1 ? '<span>…</span>' : ''}<button class="page-btn" onclick="gotoPage(${totalPages})">${totalPages}</button>`;
+        pages += `<button class="page-btn" onclick="gotoPage(${pageNo + 1})" ${pageNo === totalPages ? 'disabled' : ''}>›</button>`;
+        el.innerHTML = `<span>共 ${total} 条记录 · 第 ${pageNo}/${totalPages} 页</span><div class="page-controls">${pages}</div>`;
+    }
+
+    function gotoPage(p) { pageNo = p; renderTable(); }
+
+    async function deleteSession(id) {
+        if (!confirm('确定删除这条记录？删除后该次成绩将不可恢复。')) return;
+        try {
+            const res = await fetch(`/admin/delete_session/${id}`, { method: 'DELETE' });
+            const data = await res.json();
+            if (data.success) { showToast('已删除'); loadData(); }
+        } catch (err) { showToast('删除失败'); }
+    }
+
+    document.getElementById('searchBox').addEventListener('input', e => {
+        searchText = e.target.value.trim();
+        pageNo = 1;
+        renderTable();
+    });
+    document.getElementById('modeFilter').addEventListener('change', e => {
+        modeFilter = e.target.value;
+        pageNo = 1;
+        renderTable();
+    });
+
+    // ==================== 统计图表 ====================
+    async function loadStatistics() {
+        try {
+            const res = await fetch('/admin/statistics');
+            const data = await res.json();
+            renderScoreDistChart(data.score_distribution);
+            renderClassAvgChart(data.class_stats);
+            renderCompletionChart(data.completion);
+            renderTrendChart(data.daily_trend);
+        } catch (err) {
+            showToast('加载统计数据失败');
+        }
+        loadAnalytics();
+        loadTrendStudentOptions();
+    }
+
+    function destroyChart(id) {
+        if (chartInstances[id]) { chartInstances[id].destroy(); delete chartInstances[id]; }
+    }
+
+    function renderScoreDistChart(dist) {
+        destroyChart('scoreDist');
+        const ctx = document.getElementById('scoreDistChart').getContext('2d');
+        chartInstances['scoreDist'] = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(dist),
+                datasets: [{
+                    label: '人数',
+                    data: Object.values(dist),
+                    backgroundColor: ['#fa5151', '#ffc300', '#07c160', '#10aeff', '#06ad56'],
+                    borderRadius: 6
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+        });
+    }
+
+    function renderClassAvgChart(classes) {
+        destroyChart('classAvg');
+        const ctx = document.getElementById('classAvgChart').getContext('2d');
+        chartInstances['classAvg'] = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: classes.map(c => c.class_name || '未分班'),
+                datasets: [{ label: '平均分(%)', data: classes.map(c => c.avg_score || 0), backgroundColor: '#07c160', borderRadius: 6 }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100 } } }
+        });
+    }
+
+    function renderCompletionChart(comp) {
+        destroyChart('completion');
+        const ctx = document.getElementById('completionChart').getContext('2d');
+        chartInstances['completion'] = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['已考试', '未考试'],
+                datasets: [{ data: [comp.completed, comp.not_completed], backgroundColor: ['#07c160', '#d8d8d8'] }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+    }
+
+    function renderTrendChart(trend) {
+        destroyChart('trend');
+        const ctx = document.getElementById('trendChart').getContext('2d');
+        const sorted = [...trend].reverse();
+        chartInstances['trend'] = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: sorted.map(d => d.date),
+                datasets: [{
+                    label: '平均分(%)', data: sorted.map(d => d.avg_score),
+                    borderColor: '#07c160', backgroundColor: 'rgba(7,193,96,0.12)',
+                    fill: true, tension: 0.3, pointRadius: 4
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100 } } }
+        });
+    }
+
+    // ==================== 学情分析 ====================
+    async function loadAnalytics() {
+        const mode = document.getElementById('analyticsMode').value;
+        try {
+            const res = await fetch('/admin/analytics?mode=' + mode);
+            const data = await res.json();
+            if (!data.success) throw new Error();
+            renderCatAccChart(data.category_accuracy);
+            renderWrongTop(data.top_wrong);
+        } catch (err) {
+            showToast('加载学情分析失败');
+        }
+    }
+
+    function renderCatAccChart(categories) {
+        destroyChart('catAcc');
+        const ctx = document.getElementById('catAccChart').getContext('2d');
+        const list = [...categories].reverse();  // 柱状图从下往上，反转后最薄弱的在最上面
+        chartInstances['catAcc'] = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: list.map(c => c.category),
+                datasets: [{
+                    label: '正确率(%)',
+                    data: list.map(c => c.accuracy),
+                    backgroundColor: list.map(c => c.accuracy < 50 ? '#fa5151' : c.accuracy < 70 ? '#ffc300' : '#07c160'),
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                indexAxis: 'y', responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => `正确率 ${ctx.raw}%（答题 ${list[ctx.dataIndex].attempts} 次，答对 ${list[ctx.dataIndex].correct} 次）`
+                        }
+                    }
+                },
+                scales: { x: { beginAtZero: true, max: 100 } }
+            }
+        });
+    }
+
+    function renderWrongTop(rows) {
+        const tbody = document.getElementById('wrongTopBody');
+        if (!rows.length) {
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>暂无错题数据</p></td></tr>';
+            return;
+        }
+        tbody.innerHTML = rows.map((r, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td style="max-width:150px">${escapeHtml(r.category)}</td>
+                <td style="max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escapeHtml(r.question)}">${escapeHtml(r.question)}</td>
+                <td><span style="color:#dc2626;font-weight:650">${r.wrong_count}</span></td>
+                <td>${r.wrong_students}</td>
+                <td style="color:var(--gray-500)">${r.blank_count}</td>
+            </tr>`).join('');
+    }
+
+    async function loadTrendStudentOptions() {
+        try {
+            const res = await fetch('/admin/students');
+            const data = await res.json();
+            if (!data.success) return;
+            const sel = document.getElementById('trendStudent');
+            const prev = sel.value;
+            sel.innerHTML = '<option value="">选择学生...</option>' + data.students
+                .map(s => `<option value="${s.id}">${escapeHtml(s.class_name || '')} · ${escapeHtml(s.name)}</option>`)
+                .join('');
+            if (prev) sel.value = prev;
+        } catch (err) { /* 静默 */ }
+    }
+
+    async function loadStudentTrend() {
+        const studentId = document.getElementById('trendStudent').value;
+        destroyChart('studentTrend');
+        const ctx = document.getElementById('studentTrendChart').getContext('2d');
+        document.getElementById('trendTitle').textContent = '考试正确率 与 累计经验';
+        if (!studentId) {
+            chartInstances['studentTrend'] = new Chart(ctx, {
+                type: 'line',
+                data: { labels: [], datasets: [{ label: '正确率(%)', data: [] }] },
+                options: { responsive: true }
+            });
+            return;
+        }
+        try {
+            const res = await fetch(`/admin/student_trend/${studentId}`);
+            const data = await res.json();
+            if (!data.success) throw new Error();
+            const st = data.student;
+            document.getElementById('trendTitle').textContent =
+                `${st.class_name} · ${st.name}：考试正确率 与 累计经验（总经验 ${data.total_xp}）`;
+
+            // 合并时间轴：考试日期 + 经验日期
+            const dates = [...new Set([
+                ...data.exams.map(e => e.date.substring(0, 10)),
+                ...data.xp_daily.map(x => x.date)
+            ])].sort();
+
+            const examMap = {};
+            data.exams.forEach(e => { examMap[e.date.substring(0, 10)] = e.pct; });
+            const xpCumMap = {};
+            let last = null;
+            dates.forEach(d => {
+                const row = data.xp_daily.find(x => x.date === d);
+                if (row) last = row.cumulative;
+                xpCumMap[d] = last === null ? null : last;
+            });
+
+            const examData = dates.map(d => examMap[d] !== undefined ? examMap[d] : null);
+            const xpData = dates.map(d => xpCumMap[d]);
+
+            chartInstances['studentTrend'] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [
+                        {
+                            label: '考试正确率(%)', data: examData,
+                            borderColor: '#07c160', backgroundColor: '#07c160',
+                            pointRadius: 5, spanGaps: true, yAxisID: 'y',
+                            tension: 0.25
+                        },
+                        {
+                            label: '累计经验', data: xpData,
+                            borderColor: '#10aeff', backgroundColor: 'rgba(16,174,255,0.10)',
+                            fill: true, pointRadius: 3, yAxisID: 'y1',
+                            tension: 0.25
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => ctx.dataset.label === '考试正确率(%)'
+                                    ? `考试正确率 ${ctx.raw}%`
+                                    : `累计经验 ${ctx.raw ?? 0}`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: 100, position: 'left', title: { display: true, text: '正确率(%)' } },
+                        y1: { beginAtZero: true, position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: '累计经验' } }
+                    }
+                }
+            });
+        } catch (err) {
+            showToast('加载学生成长曲线失败');
+        }
+    }
+
+    document.getElementById('analyticsMode').addEventListener('change', loadAnalytics);
+    document.getElementById('trendStudent').addEventListener('change', loadStudentTrend);
+
+    // ==================== 平时成绩（等级折算） ====================
+    async function loadLevels() {
+        try {
+            const [lvRes, setRes] = await Promise.all([fetch('/admin/levels'), fetch('/admin/settings')]);
+            const lv = await lvRes.json();
+            const setting = await setRes.json();
+            if (!lv.success) { showToast('加载平时成绩失败'); return; }
+
+            document.getElementById('qualifyInput').value = lv.qualify_level;
+            const rules = setting.xp_rules || {};
+            document.getElementById('qualifyHint').innerHTML =
+                `达到 <b>${lv.qualify_level} 级（${escapeHtml(lv.qualify_level_name)}）</b>折算 60 分（合格），满级 100 分。` +
+                `共需约 <b>${setting.qualify_xp}</b> 经验。经验规则：答对得 ${rules.base} 经验，` +
+                `每天前 ${rules.daily_full} 题足额、之后递减；同一题反复做经验大幅衰减（防刷分）。`;
+
+            const total = lv.students.length;
+            document.getElementById('qualifiedSummary').textContent =
+                `达标 ${lv.qualified_count} / ${total} 人`;
+
+            const tbody = document.getElementById('levelsBody');
+            if (!total) {
+                tbody.innerHTML = '<tr><td colspan="8" class="empty-state"><p>暂无学生</p></td></tr>';
+                return;
+            }
+            tbody.innerHTML = lv.students.map(s => {
+                const scoreClass = s.regular_score >= 90 ? 'excellent' : s.regular_score >= 75 ? 'good'
+                    : s.regular_score >= 60 ? 'pass' : 'fail';
+                return `<tr>
+                    <td>${escapeHtml(s.class_name || '-')}</td>
+                    <td>${s.class_rank}</td>
+                    <td>${escapeHtml(s.name)}</td>
+                    <td>${escapeHtml(s.level_name)}</td>
+                    <td>Lv.${s.level}</td>
+                    <td>${s.total_xp}</td>
+                    <td class="score-cell ${scoreClass}">${s.regular_score}</td>
+                    <td>${s.qualified
+                        ? '<span class="status-badge status-completed">达标</span>'
+                        : '<span class="status-badge status-timeout">未达标</span>'}</td>
+                </tr>`;
+            }).join('');
+        } catch (err) {
+            showToast('加载平时成绩失败');
+        }
+    }
+
+    async function saveQualifyLevel() {
+        const input = document.getElementById('qualifyInput');
+        const lv = parseInt(input.value, 10);
+        if (!lv || lv < 2 || lv > 30) { showToast('合格等级需在 2 ~ 30 之间'); return; }
+        try {
+            const res = await fetch('/admin/settings', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ qualify_level: lv })
+            });
+            const data = await res.json();
+            showToast(data.message);
+            if (data.success) loadLevels();
+        } catch (err) { showToast('保存失败'); }
+    }
+
+    // ==================== 班级管理 ====================
+    async function loadClasses() {
+        try {
+            const res = await fetch('/admin/classes');
+            const data = await res.json();
+            renderClassList(data.classes);
+        } catch (err) { showToast('加载班级失败'); }
+    }
+
+    function renderClassList(classes) {
+        const el = document.getElementById('classList');
+        if (classes.length === 0) {
+            el.innerHTML = '<div class="empty-state"><p>暂无班级，请先添加</p></div>';
+            return;
+        }
+        el.innerHTML = classes.map(c => `
+            <div class="class-item" id="class-${c.id}" data-id="${c.id}" data-name="${escapeHtml(c.class_name)}">
+                <div class="class-info">
+                    <span class="class-name">${escapeHtml(c.class_name)}</span>
+                    <span class="class-count">${c.student_count} 名学生</span>
+                </div>
+                <div class="class-actions">
+                    <button class="btn btn-outline btn-sm" data-action="edit">编辑</button>
+                    <button class="btn btn-danger btn-sm" data-action="delete">删除</button>
+                </div>
+            </div>
+        `).join('');
+
+        // 事件委托，避免把班级名拼进 onclick 造成注入
+        el.querySelectorAll('.class-item').forEach(item => {
+            const id = parseInt(item.dataset.id, 10);
+            const name = item.dataset.name;
+            item.querySelector('[data-action="edit"]').addEventListener('click', () => editClass(id, name));
+            item.querySelector('[data-action="delete"]').addEventListener('click', () => deleteClass(id, name));
+        });
+    }
+
+    async function addClass() {
+        const input = document.getElementById('newClassName');
+        const name = input.value.trim();
+        if (!name) { showToast('请输入班级名称'); return; }
+        try {
+            const res = await fetch('/admin/classes', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ class_name: name })
+            });
+            const data = await res.json();
+            showToast(data.message);
+            if (data.success) { input.value = ''; loadClasses(); }
+        } catch (err) { showToast('添加失败'); }
+    }
+
+    function editClass(id, oldName) {
+        const item = document.getElementById('class-' + id);
+        const infoEl = item.querySelector('.class-info');
+        const input = document.createElement('input');
+        input.className = 'edit-input';
+        input.id = 'edit-input-' + id;
+        input.value = oldName;
+        input.maxLength = 40;
+        infoEl.innerHTML = '';
+        infoEl.appendChild(input);
+        const actionsEl = item.querySelector('.class-actions');
+        actionsEl.innerHTML = `
+            <button class="btn btn-success btn-sm" id="save-class-${id}">保存</button>
+            <button class="btn btn-outline btn-sm" id="cancel-class-${id}">取消</button>
+        `;
+        actionsEl.querySelector(`#save-class-${id}`).addEventListener('click', () => saveClass(id));
+        actionsEl.querySelector(`#cancel-class-${id}`).addEventListener('click', loadClasses);
+        input.focus();
+        input.select();
+        input.addEventListener('keydown', e => { if (e.key === 'Enter') saveClass(id); });
+    }
+
+    async function saveClass(id) {
+        const newName = document.getElementById('edit-input-' + id).value.trim();
+        if (!newName) { showToast('请输入班级名称'); return; }
+        try {
+            const res = await fetch(`/admin/classes/${id}`, {
+                method: 'PUT', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ class_name: newName })
+            });
+            const data = await res.json();
+            showToast(data.message);
+            if (data.success) loadClasses();
+        } catch (err) { showToast('修改失败'); }
+    }
+
+    async function deleteClass(id, name) {
+        if (!confirm(`确定删除班级"${name}"？`)) return;
+        try {
+            const res = await fetch(`/admin/classes/${id}`, { method: 'DELETE' });
+            const data = await res.json();
+            showToast(data.message);
+            if (data.success) loadClasses();
+        } catch (err) { showToast('删除失败'); }
+    }
+
+    /* ============================================================
+     * 技能考试成绩（BIOS / WinPE 模拟 + 实操装机 + 平时分 总评）
+     * ============================================================ */
+    let simRows = [];
+    let simClasses = [];
+    let simFrozen = false;
+
+    function simQuery() {
+        const p = new URLSearchParams();
+        const cls = document.getElementById('simClassFilter').value;
+        const kw = document.getElementById('simSearchBox').value.trim();
+        const sw = document.getElementById('simSwitchMin').value;
+        if (cls) p.set('class_name', cls);
+        if (kw) p.set('q', kw);
+        if (sw) p.set('min_switch', sw);
+        if (document.getElementById('simOnlyMissing').checked) p.set('only_missing', '1');
+        return p.toString();
+    }
+
+    async function loadSimSummary() {
+        try {
+            const res = await fetch('/admin/sim/summary?' + simQuery());
+            const data = await res.json();
+            if (!data.success) throw new Error(data.message || '');
+            simRows = data.rows || [];
+            simFrozen = !!data.frozen;
+
+            if (data.classes && data.classes.length) {
+                simClasses = data.classes;
+                const sel = document.getElementById('simClassFilter');
+                const cur = sel.value;
+                sel.innerHTML = '<option value="">全部班级</option>' +
+                    data.classes.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+                sel.value = cur;
+                const bs = document.getElementById('simBulkClass');
+                if (bs) bs.innerHTML = '<option value="">不限班级（全库匹配）</option>' +
+                    data.classes.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+            }
+
+            renderSimStat(data.summary || {});
+            renderSimRows();
+
+            const btn = document.getElementById('simFreezeBtn');
+            btn.textContent = simFrozen ? '解冻平时分' : '冻结平时分';
+        } catch (err) {
+            document.getElementById('simBody').innerHTML =
+                '<tr><td colspan="12" class="empty-state">加载失败，请刷新重试</td></tr>';
+        }
+    }
+
+    function renderSimStat(s) {
+        const items = [
+            ['考生总数', s.total ?? 0],
+            ['BIOS 已考', s.bios_done ?? 0],
+            ['WinPE 已考', s.winpe_done ?? 0],
+            ['实操已录', s.manual_done ?? 0],
+            ['BIOS 均分', s.avg_bios ?? 0],
+            ['WinPE 均分', s.avg_winpe ?? 0],
+        ];
+        document.getElementById('simStat').innerHTML = items.map(
+            ([k, v]) => `<div class="sc"><div class="k">${k}</div><div class="v">${v}</div></div>`
+        ).join('') +
+        (simFrozen ? '<div class="sc"><div class="k">平时分</div><div class="v" style="font-size:14px;color:#d97706">已冻结</div></div>' : '');
+    }
+
+    function scoreCls(v) {
+        if (v === null || v === undefined) return '';
+        return v >= 85 ? 'good' : (v >= 60 ? 'pass' : 'fail');
+    }
+
+    function renderSimRows() {
+        const tb = document.getElementById('simBody');
+        if (!simRows.length) {
+            tb.innerHTML = '<tr><td colspan="12" class="empty-state">没有符合条件的考生</td></tr>';
+            return;
+        }
+        tb.innerHTML = simRows.map(r => {
+            const b = r.bios_score === null ? '<span class="miss-tag">未考</span>'
+                      : `<span class="score-cell ${scoreCls(r.bios_score)}">${r.bios_score}</span>`;
+            const w = r.winpe_score === null ? '<span class="miss-tag">未考</span>'
+                      : `<span class="score-cell ${scoreCls(r.winpe_score)}">${r.winpe_score}</span>`;
+            const mCell = `<input type="number" class="manual-input ${r.manual_missing ? 'missing' : ''}"
+                    min="0" max="100" step="0.5" value="${r.manual_score === null ? '' : r.manual_score}"
+                    data-sid="${r.student_id}" placeholder="未录"
+                    onchange="saveManual(${r.student_id}, this)"
+                    onkeydown="if(event.key==='Enter')this.blur()">`;
+            return `<tr>
+                <td>${r.rank}</td>
+                <td>${escapeHtml(r.student_no || '')}</td>
+                <td><a href="javascript:void(0)" onclick="openSimDetail(${r.student_id})">${escapeHtml(r.name)}</a></td>
+                <td>${escapeHtml(r.class_name || '')}</td>
+                <td class="score-cell">${r.regular_score}</td>
+                <td>${b}</td>
+                <td>${w}</td>
+                <td>${mCell}</td>
+                <td class="score-cell">${r.exam_score}</td>
+                <td class="score-cell ${scoreCls(r.final_score)}">${r.final_score}</td>
+                <td>${r.bios_switch}/${r.winpe_switch}</td>
+                <td><button class="btn btn-outline btn-sm" onclick="openSimDetail(${r.student_id})">明细</button></td>
+            </tr>`;
+        }).join('');
+    }
+
+    async function saveManual(sid, input) {
+        const raw = input.value.trim();
+        if (raw === '') { showToast('请输入 0~100 的分数；确未参加实操请填 0'); input.focus(); return; }
+        const score = Number(raw);
+        if (!isFinite(score) || score < 0 || score > 100) { showToast('分数需在 0~100 之间'); input.focus(); return; }
+        try {
+            const res = await fetch('/admin/sim/manual', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ student_id: sid, score: score })
+            });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.message || '保存失败');
+            input.classList.remove('missing');
+            showToast('已保存：考试分 ' + data.exam_score + '　总评 ' + data.final_score);
+            loadSimSummary();
+        } catch (err) { showToast(err.message || '保存失败'); }
+    }
+
+    async function openSimDetail(sid) {
+        if (!sid) { showToast('未指定考生'); return; }
+        const drawer = document.getElementById('simDrawer');
+        document.getElementById('simDrawerBody').innerHTML = '加载中...';
+        drawer.classList.add('show');
+        try {
+            const res = await fetch('/admin/sim/student/' + sid);
+            const data = await res.json();
+            if (!data.success) throw new Error(data.message || '加载失败');
+            renderSimDetail(data);
+        } catch (err) {
+            document.getElementById('simDrawerBody').innerHTML =
+                '<p class="error-msg">加载失败：' + escapeHtml(err.message) + '</p>';
+        }
+    }
+    function closeSimDrawer() { document.getElementById('simDrawer').classList.remove('show'); }
+
+    function simTypeLabel(t) { return t === 'bios' ? 'BIOS 设置模拟' : 'WinPE 装机维护'; }
+
+    function renderSimDetail(d) {
+        const stu = d.student || {};
+        document.getElementById('simDrawerTitle').textContent =
+            '成绩明细　' + stu.name + '（' + (stu.class_name || '') + '）';
+
+        let html = '';
+        if (d.manual) {
+            html += `<div class="sim-sec"><h4>总评构成</h4><div class="kv">
+                <span>平时分 <b>${d.manual.regular_score ?? 0}</b></span>
+                <span>实操 <b>${d.manual.score ?? '未录'}</b></span>
+                <span>考试分 <b>${d.manual.exam_score ?? 0}</b></span>
+                <span>总评 <b>${d.manual.final_score ?? 0}</b></span>
+                <span>录入时间 <b>${escapeHtml(d.manual.at || '—')}</b></span>
+                ${d.manual.note ? '<span>备注 <b>' + escapeHtml(d.manual.note) + '</b></span>' : ''}
+            </div></div>`;
+        }
+
+        ['bios', 'winpe'].forEach(t => {
+            const s = d[t];
+            if (!s) {
+                html += `<div class="sim-sec"><h4>${simTypeLabel(t)}</h4>
+                    <p style="color:var(--danger);font-size:13px">尚未参加考试</p></div>`;
+                return;
+            }
+            const rows = (s.steps || []).map(x => {
+                const cls = x.full ? 'ok' : (x.got > 0 ? 'part' : 'no');
+                return `<tr class="${cls}"><td>${escapeHtml(x.name)}</td>
+                    <td class="g">${x.got}/${x.pts}</td>
+                    <td style="color:var(--gray-500)">${escapeHtml(x.tip || '')}</td></tr>`;
+            }).join('');
+            const tl = (s.timeline || []).slice(0, 120).map(e =>
+                `<div><span class="t">${Math.round((e.t_ms || 0) / 100) / 10}s</span>` +
+                `<span class="k">${escapeHtml(e.kind)}</span>${escapeHtml(e.target || '')}` +
+                `${e.value ? ' = ' + escapeHtml(String(e.value)) : ''}</div>`).join('') ||
+                '<div style="color:var(--gray-500)">无操作记录</div>';
+            const warns = (s.warnings || []).length
+                ? '<p style="color:#d97706;font-size:12.5px;margin:6px 0">⚠ ' +
+                  (s.warnings || []).map(escapeHtml).join('；') + '</p>' : '';
+
+            html += `<div class="sim-sec"><h4>${simTypeLabel(t)}　得分 ${s.score} 分</h4>
+                <div class="kv">
+                    <span>状态 <b>${escapeHtml(s.status)}</b></span>
+                    <span>用时 <b>${s.duration_sec} 秒</b></span>
+                    <span>切屏 <b>${s.switch_count} 次</b></span>
+                    <span>开考 <b>${escapeHtml(s.started_at || '')}</b></span>
+                    <span>交卷 <b>${escapeHtml(s.submitted_at || '—')}</b></span>
+                </div>${warns}
+                <table class="mini-table"><thead><tr><th>评分项</th><th style="text-align:center">得分</th><th>说明</th></tr></thead>
+                <tbody>${rows}</tbody></table>
+                <div style="margin-top:10px;font-size:12.5px;color:var(--gray-500);margin-bottom:4px">操作时间轴（前 120 条）</div>
+                <div class="timeline">${tl}</div>
+                <div style="margin-top:8px">
+                    <button class="btn btn-outline btn-sm" onclick="voidSim(${s.session_id}, '${escapeHtml(stu.name || '')}', '${t}')">作废本次考试（允许重考）</button>
+                </div>
+            </div>`;
+        });
+
+        if ((d.logs || []).length) {
+            html += `<div class="sim-sec"><h4>改分记录</h4><table class="mini-table">
+                <thead><tr><th>时间</th><th>字段</th><th style="text-align:center">原值→新值</th><th>原因</th></tr></thead>
+                <tbody>` + d.logs.map(l => `<tr><td>${escapeHtml(l.at || '')}</td><td>${escapeHtml(l.field || '')}</td>
+                    <td class="g">${escapeHtml(String(l.old))} → ${escapeHtml(String(l.new))}</td>
+                    <td>${escapeHtml(l.reason || '')}</td></tr>`).join('') + '</tbody></table></div>';
+        }
+
+        document.getElementById('simDrawerBody').innerHTML = html;
+    }
+
+    async function voidSim(sessionId, name, simType) {
+        if (!confirm(`确定作废「${name}」的${simTypeLabel(simType)}记录吗？\n作废后该生可以重新考试，原成绩不再计入总评。`)) return;
+        try {
+            const res = await fetch('/admin/sim/void', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ session_id: sessionId })
+            });
+            const data = await res.json();
+            showToast(data.message || (data.success ? '已作废' : '操作失败'));
+            if (data.success) { closeSimDrawer(); loadSimSummary(); }
+        } catch (err) { showToast('操作失败'); }
+    }
+
+    async function toggleSimFreeze() {
+        const freeze = !simFrozen;
+        if (freeze && !confirm('冻结平时分？\n冻结后总评使用当前快照，学生之后继续刷题不会再改变总评。')) return;
+        try {
+            const res = await fetch('/admin/sim/freeze_regular', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ freeze: freeze })
+            });
+            const data = await res.json();
+            showToast(freeze ? `已冻结 ${data.count} 人的平时分` : '已解冻，平时分恢复实时计算');
+            if (data.success) loadSimSummary();
+        } catch (err) { showToast('操作失败'); }
+    }
+
+    function exportSim() {
+        const p = new URLSearchParams();
+        const cls = document.getElementById('simClassFilter').value;
+        if (cls) p.set('class_name', cls);
+        window.location.href = '/admin/sim/export' + (p.toString() ? '?' + p.toString() : '');
+    }
+
+    function showSimBulk() {
+        document.getElementById('simBulkErr').textContent = '';
+        document.getElementById('simBulkModal').classList.add('show');
+    }
+    function closeSimBulk() { document.getElementById('simBulkModal').classList.remove('show'); }
+
+    async function submitSimBulk() {
+        const err = document.getElementById('simBulkErr');
+        err.textContent = '';
+        const text = document.getElementById('simBulkText').value;
+        if (!text.trim()) { err.textContent = '请输入内容'; return; }
+        try {
+            const res = await fetch('/admin/sim/manual/bulk', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: text, class_name: document.getElementById('simBulkClass').value || null })
+            });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.message || '导入失败');
+            let msg = `成功导入 ${data.added} 人`;
+            if ((data.skipped || []).length) msg += `，跳过 ${data.skipped.length} 条：${data.skipped.slice(0, 3).join('；')}`;
+            showToast(msg);
+            closeSimBulk();
+            loadSimSummary();
+        } catch (e) { err.textContent = e.message || '导入失败'; }
+    }
+
+    ['simClassFilter', 'simOnlyMissing'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('change', loadSimSummary);
+    });
+    (function () {
+        let t = null;
+        const box = document.getElementById('simSearchBox');
+        const sw = document.getElementById('simSwitchMin');
+        const run = () => { clearTimeout(t); t = setTimeout(loadSimSummary, 320); };
+        if (box) box.addEventListener('input', run);
+        if (sw) sw.addEventListener('input', run);
+    })();
+
+    loadData();
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "_comment": [
+    "训练假人切图骨骼定义。坐标是 static/battle/dummy.png 的原始像素坐标，y 轴向下。",
+    "朝向：正脸。左手持圆盾（屏幕右侧）。",
+    "特殊：下半身是一根立柱（post），受击时立柱不动、上身绕腰（waist = torso 的 pivot）",
+    "回弹摆动 —— 这正是稻草假人该有的手感，也省掉了给它做双腿动画的必要。"
+  ],
+  "unit": "dummy",
+  "label": "训练假人",
+  "source": "static/battle/dummy.png",
+  "alphaSeed": 96,
+  "alphaFloor": 30,
+  "bleed": 3,
+  "useBase": true,
+  "weaponArm": null,
+  "facing": 1,
+  "leanSign": 1,
+  "armSign": 1,
+  "parts": [
+    { "name": "post", "parent": null, "seed": [170, 278], "pivot": [172, 228], "z": 1 },
+    { "name": "torso", "parent": null, "seed": [172, 150], "pivot": [172, 228], "z": 2 },
+    { "name": "armL", "parent": "torso", "seed": [126, 160], "pivot": [152, 138], "z": 3 },
+    { "name": "armR", "parent": "torso", "seed": [246, 152], "pivot": [196, 136], "z": 4 },
+    { "name": "head", "parent": "torso", "seed": [172, 78], "pivot": [172, 116], "z": 5, "bias": 6 }
+  ]
+}

@@ -1,0 +1,443 @@
+[
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "USB 3.2 Gen 1这个命名对应的旧名称是？",
+    "options": [
+      "USB 3.0（5Gbps）",
+      "USB 1.1",
+      "USB 2.0",
+      "雷电3"
+    ],
+    "answer": "A",
+    "explanation": "USB-IF重新命名后：USB 3.0=USB 3.2 Gen 1（5Gbps），USB 3.1=Gen 2（10Gbps），Gen 2x2为20Gbps。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "同样是USB Type-C接口，不同设备的接口功能可能不同，原因在于？",
+    "options": [
+      "Type-C只是接口外形，支持哪些功能（充电/视频/数据速率）取决于设备实现",
+      "Type-C接口做工不同颜色不同",
+      "所有Type-C功能都完全相同",
+      "Type-C只能传输音频"
+    ],
+    "answer": "A",
+    "explanation": "Type-C只是物理形状标准，速率、视频输出、充电功率等取决于内部协议与线材规格，买线时要确认支持的功能。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "USB PD快充\"协商供电\"的含义是？",
+    "options": [
+      "固定输出5V不变",
+      "只给手机充电不能给电脑",
+      "必须使用专用交流接触器",
+      "充电器与设备协商选择合适的电压电流档位（如5V/9V/20V）"
+    ],
+    "answer": "D",
+    "explanation": "PD协议下设备与充电器握手协商电压电流档位，从5V到48V（PD3.1）灵活调节，因此小到耳机大到笔记本都能安全快充。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "雷电4接口与USB4的关系是？",
+    "options": [
+      "完全不兼容的两套体系",
+      "雷电4基于雷电3并要求更高规格，与USB4生态互相兼容",
+      "USB4是雷电4的下一代替代品",
+      "雷电4只能接苹果显示器"
+    ],
+    "answer": "B",
+    "explanation": "雷电4基于USB4/雷电3协议集，要求40Gbps、双4K输出等更高最低规格；USB4也整合了雷电协议，两者接口可互通。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "笔记本电脑上\"全功能Type-C\"能输出视频，依靠的是什么技术？",
+    "options": [
+      "DisplayPort Alt Mode（DP替代模式）",
+      "蓝牙投屏协议",
+      "红外传输",
+      "模拟VGA直通"
+    ],
+    "answer": "A",
+    "explanation": "全功能C口通过DP Alt Mode把DisplayPort信号放进Type-C线路传输，再用C转HDMI/DP线即可外接显示器。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "Wi-Fi 6E/7时代的\"三频路由器\"指的是哪三个频段？",
+    "options": [
+      "2.4GHz、5GHz、60GHz",
+      "900MHz、2.4GHz、5GHz",
+      "2.4GHz、5GHz、6GHz",
+      "5GHz、6GHz、10GHz"
+    ],
+    "answer": "C",
+    "explanation": "三频路由同时提供2.4GHz、5GHz和新增的6GHz频段，6GHz频段干扰少、带宽足，供支持的新设备使用。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "手机的NFC功能不支持以下哪种用途？",
+    "options": [
+      "公交卡模拟",
+      "门禁卡模拟",
+      "连接蓝牙耳机播放音乐",
+      "移动支付碰一碰"
+    ],
+    "answer": "C",
+    "explanation": "NFC是近距离（几厘米）无线通信，用于支付、门禁、公交卡和快速配对等；音频播放由蓝牙承担而非NFC。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "UWB（超宽带）技术在手机中的典型用途是？",
+    "options": [
+      "提高充电功率",
+      "精准测距定位（如查找物品、AirTag防丢）",
+      "替代蜂窝通信打电话",
+      "提升屏幕亮度"
+    ],
+    "answer": "B",
+    "explanation": "UWB利用超宽带脉冲实现厘米级测距，支持精确查找防丢标签、智能门锁解锁等场景。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "LPDDR5X内存主要用在什么设备上？",
+    "options": [
+      "手机和轻薄笔记本",
+      "台式机内存条",
+      "服务器内存条",
+      "显卡显存"
+    ],
+    "answer": "A",
+    "explanation": "LPDDR（低功耗DDR）为移动设备优化，功耗低、封装紧凑，广泛用于手机和轻薄本；台式机用标准DIMM，显存用GDDR。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "HBM（高带宽内存）目前主要应用于什么产品？",
+    "options": [
+      "入门家用显卡",
+      "机械硬盘缓存",
+      "U盘",
+      "数据中心GPU/AI加速卡"
+    ],
+    "answer": "D",
+    "explanation": "HBM通过3D堆叠提供极高带宽，成本高，主要用于数据中心GPU和AI加速卡（如各类算力卡）。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "3D NAND闪存堆叠层数不断增加的直接好处是？",
+    "options": [
+      "单片容量更大、单位成本更低",
+      "颜色更加丰富",
+      "完全不需要主控",
+      "不再需要通电"
+    ],
+    "answer": "A",
+    "explanation": "3D NAND垂直堆叠存储单元，层数越多单位面积容量越大，是 SSD 大容量化和降价的关键技术。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "无DRAM缓存固态硬盘通过什么技术弥补性能？",
+    "options": [
+      "增加机械马达",
+      "HMB（借用系统内存存放映射表）",
+      "提高风扇转速",
+      "改用光盘存储"
+    ],
+    "answer": "B",
+    "explanation": "HMB（主机内存缓冲）让无缓存SSD借用少量系统内存保存FTL映射表，兼顾成本与性能，常见于入门NVMe盘。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "固态硬盘的\"SLC缓存\"指的是？",
+    "options": [
+      "焊接在主板上的缓存芯片",
+      "把TLC/QLC部分空间模拟成SLC模式加速写入的机制",
+      "内存条的超频配置",
+      "硬盘盒的散热片"
+    ],
+    "answer": "B",
+    "explanation": "许多SSD把部分闪存以SLC方式模拟运行，写入先入高速SLC区再搬移，因此空盘测速快、写满后速度下降。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "U.2接口常见于什么设备？",
+    "options": [
+      "家用台式机主板标配",
+      "手机快充头",
+      "显示器连接线",
+      "企业级固态硬盘"
+    ],
+    "answer": "D",
+    "explanation": "U.2（SFF-8639）支持PCIe通道、体积大散热好，主要用于企业级2.5英寸SSD，家用市场少见。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "雷电5（Thunderbolt 5）的接口带宽提升到了多少？",
+    "options": [
+      "20Gbps",
+      "40Gbps",
+      "120Gbps（单向80Gbps，带宽自适应可达120Gbps）",
+      "480Mbps"
+    ],
+    "answer": "C",
+    "explanation": "雷电5基础带宽80Gbps，通过带宽自适应在需要时提升到120Gbps，可驱动多台高分辨率外接显示器和外置显卡。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "OLED显示器在电竞场景的重要优势是？",
+    "options": [
+      "价格便宜",
+      "像素自发光",
+      "尺寸一定更大",
+      "响应速度极快（灰阶响应可低至0.03ms）"
+    ],
+    "answer": "D",
+    "explanation": "OLED每个像素独立开关，无需液晶翻转，响应速度远超LCD，高速画面几乎无拖影，但需注意烧屏风险。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "ATX 3.1规范中的12V-2x6接口相比12VHPWR的改进是？",
+    "options": [
+      "功率提升到1000W",
+      "完全取消了12V供电",
+      "缩短了针脚设计了更安全的插拔结构，降低虚接风险",
+      "不再需要卡扣"
+    ],
+    "answer": "C",
+    "explanation": "12V-2x6在12VHPWR基础上优化了针脚长度和插座设计，配合完全插入检测，显著降低插不紧导致熔毁的概率。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "RTX 50系列搭载的DLSS 4主打的\"多帧生成\"是指？",
+    "options": [
+      "渲染1帧生成多帧，大幅提升帧率",
+      "把4帧合成1帧",
+      "只能用于看视频",
+      "降低分辨率提高画质"
+    ],
+    "answer": "A",
+    "explanation": "多帧生成在DLSS 3帧生成基础上进一步由AI插补多帧，渲染一帧可补出多帧，帧率成倍提升。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "AMD的FSR超分辨率技术与DLSS的一大区别是？",
+    "options": [
+      "FSR只能用于A卡",
+      "FSR开源且可跨品牌（A卡/N卡/Intel卡）使用",
+      "FSR不需要输入画面",
+      "FSR只能提升音质"
+    ],
+    "answer": "B",
+    "explanation": "FSR采用开源方案，不依赖专用硬件单元，AMD/NVIDIA/Intel显卡甚至掌机都能开启；DLSS依赖N卡的Tensor Core。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "Intel Arc（锐炫）系列的问世意味着什么？",
+    "options": [
+      "Intel退出了CPU市场",
+      "Intel重新进入独立显卡市场与N/A两家竞争",
+      "Intel只做核显了",
+      "Arc是内存品牌"
+    ],
+    "answer": "B",
+    "explanation": "Intel Arc是Intel的独立显卡产品线（Xe HPG架构），使独立显卡市场形成NVIDIA、AMD、Intel三足鼎立。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "\"AI PC\"概念中衡量NPU性能的常用指标是？",
+    "options": [
+      "频率GHz",
+      "核心数",
+      "显存GB",
+      "算力TOPS（每秒万亿次运算）"
+    ],
+    "answer": "D",
+    "explanation": "NPU算力以TOPS计量，例如AI PC常以40 TOPS以上作为本地AI体验的门槛指标。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "显卡中RT Core（光线追踪核心）的作用是？",
+    "options": [
+      "存储游戏存档",
+      "加速光线与场景求交计算，让实时光追更流畅",
+      "提升网络速度",
+      "给显存降温"
+    ],
+    "answer": "B",
+    "explanation": "RT Core是专用的光线求交加速单元，把光追最耗时的计算从通用着色器中卸载，实时光追游戏帧率因此明显提升。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "显示器/电视支持VRR（可变刷新率）的好处是？",
+    "options": [
+      "画面随显卡输出同步刷新，消除撕裂和卡顿",
+      "屏幕更亮",
+      "色域更广",
+      "音质更好"
+    ],
+    "answer": "A",
+    "explanation": "VRR（如G-Sync、FreeSync）让屏幕刷新率实时匹配显卡帧率，游戏画面不再撕裂卡顿；HDMI 2.1和DP都支持。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "Qi2无线充电标准的\"MPP磁吸\"设计带来的直接好处是？",
+    "options": [
+      "充电不需要电",
+      "手机与充电板磁吸对位，充电效率更高更稳定",
+      "把充电速度提高到1000W",
+      "可以隔墙充电"
+    ],
+    "answer": "B",
+    "explanation": "Qi2引入磁吸对准（MPP，基于苹果MagSafe），线圈始终对位，减少能量损耗和发热，充电更稳。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "手机存储中UFS相比eMMC的根本优势是？",
+    "options": [
+      "价格更便宜",
+      "容量一定更大",
+      "eMMC更先进",
+      "全双工串行接口，读写（尤其随机）性能大幅领先"
+    ],
+    "answer": "D",
+    "explanation": "eMMC半双工读写不能同时进行，UFS全双工且带宽更高，App安装、加载速度明显更快，新机基本都采用UFS。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "2024年起旗舰手机流行的\"硅碳负极电池\"的优点是？",
+    "options": [
+      "完全不需要充电",
+      "相同体积下能量密度更高，容量更大",
+      "可以水洗",
+      "电压提高到220V"
+    ],
+    "answer": "B",
+    "explanation": "硅碳负极提升锂电池能量密度，在轻薄机身内塞进更大容量，缓解续航焦虑。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "部分新手机支持的\"卫星通信\"功能主要用于什么场景？",
+    "options": [
+      "提速下载游戏",
+      "在没有地面网络覆盖的野外发送求救/短消息",
+      "替代家庭宽带",
+      "给卫星充电"
+    ],
+    "answer": "B",
+    "explanation": "手机直连卫星可在无人区、灾害断网时发送求救短信或短报文，是重要的应急保底通信能力。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "mc",
+    "question": "eSIM技术的含义是？",
+    "options": [
+      "更大的实体SIM卡",
+      "嵌入设备的虚拟SIM卡，无需插实体卡即可办理入网",
+      "手机的存储卡",
+      "耳机的配对芯片"
+    ],
+    "answer": "B",
+    "explanation": "eSIM把SIM信息写入设备内置芯片，运营商配置文件远程下发，无需实体卡片，手表和轻薄本已广泛采用。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "tf",
+    "question": "通过USB PD，一根Type-C线可以同时为笔记本供电和传输数据。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "全功能Type-C线材支持PD供电与数据/视频同时工作，一根线即可完成充电和外接设备。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "tf",
+    "question": "只要是USB Type-C接口的线，就一定能跑满雷电/USB4的40Gbps速率。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "B",
+    "explanation": "Type-C只是外形，高速率需要线材内部规格支持；许多C to C线只支持USB 2.0或60W充电，速率和功率差异很大。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "tf",
+    "question": "Wi-Fi 7路由器可以向下兼容Wi-Fi 6和更早的设备连接使用。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "无线路由器新旧标准向下兼容，Wi-Fi 7路由器可接入Wi-Fi 6/5/4设备，只是老设备无法享受新标准的速率。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "tf",
+    "question": "Qi2磁吸对位可以减少线圈错位带来的能量损耗，提高无线充电效率。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "线圈对不准是无线充电效率低、发热大的主因，磁吸保证对位后效率与稳定性都更好。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "tf",
+    "question": "在欧盟统一充电接口法规推动下，新iPhone也已改用USB Type-C接口。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "自iPhone 15起苹果改用USB-C接口，符合欧盟统一消费电子充电接口的法规要求。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "tf",
+    "question": "HBM高带宽内存目前主要用于家用入门级显卡。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "B",
+    "explanation": "HBM成本高昂，用于数据中心GPU和AI加速卡，家用显卡仍以GDDR显存为主。"
+  },
+  {
+    "category": "最新硬件标准与新技术",
+    "q_type": "tf",
+    "question": "目前市面上所有显卡都支持硬件光线追踪。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "B",
+    "explanation": "只有近年中高端以上的显卡配备RT Core等硬件光追单元，老卡和入门卡不支持或只能以极低帧率模拟。"
+  }
+]

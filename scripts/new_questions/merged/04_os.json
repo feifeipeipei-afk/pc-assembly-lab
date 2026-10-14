@@ -1,0 +1,417 @@
+[
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "微软官方制作Windows 11安装U盘的工具叫什么？",
+    "options": [
+      "媒体创建工具（Media Creation Tool）",
+      "磁盘精灵",
+      "压缩软件WinRAR",
+      "驱动精灵"
+    ],
+    "answer": "A",
+    "explanation": "微软官网提供\"媒体创建工具\"（Win11称安装助手/媒体创建工具），可自动下载镜像并制作可启动安装U盘，是官方推荐方式。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "与家庭版相比，Windows专业版额外具备的典型功能是？",
+    "options": [
+      "更漂亮的开机动画",
+      "BitLocker加密、组策略和远程桌面主机功能",
+      "更大的显示器支持数量",
+      "自带的办公软件"
+    ],
+    "answer": "B",
+    "explanation": "专业版面向办公和管理场景，包含BitLocker、组策略编辑器、Hyper-V、远程桌面主机等功能，家庭版没有。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "BitLocker的主要功能是？",
+    "options": [
+      "清理磁盘垃圾",
+      "加快开机速度",
+      "对磁盘分区进行加密保护",
+      "压缩文件体积"
+    ],
+    "answer": "C",
+    "explanation": "BitLocker是Windows的磁盘加密功能，即使硬盘丢失，没有恢复密钥也无法读取加密数据，常用于保护笔记本数据。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "Windows 10/11的\"重置此电脑\"功能提供哪两种主要选择？",
+    "options": [
+      "快速重置和慢速重置",
+      "保留个人文件和删除所有内容",
+      "只重置浏览器和全部重装",
+      "重置C盘和重置D盘"
+    ],
+    "answer": "B",
+    "explanation": "重置时可选\"保留我的文件\"（重装系统但保留个人文件）或\"删除所有内容\"（彻底清空），相当于系统层面的恢复出厂。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "Windows重置时的\"云下载\"选项是指？",
+    "options": [
+      "从微软服务器下载全新的系统文件进行重装",
+      "从网盘下载个人文件",
+      "把数据上传到云端备份",
+      "下载最新的显卡驱动"
+    ],
+    "answer": "A",
+    "explanation": "云下载会从微软服务器获取最新系统镜像完成重装，本地文件损坏时比\"本地重装\"更可靠，但需要联网且消耗流量。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "\"系统映像备份\"与\"系统还原点\"的主要区别是？",
+    "options": [
+      "没有区别，只是名字不同",
+      "映像备份需要额外付费",
+      "还原点只能在DOS下使用",
+      "系统映像包含整个系统盘的完整副本，还原点只记录系统状态"
+    ],
+    "answer": "D",
+    "explanation": "系统映像是整盘快照（含程序和文件），可完整恢复；还原点只保存注册表和系统文件状态，用于回退系统配置变更。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "运行msinfo32可以查看什么？",
+    "options": [
+      "详细的系统信息摘要",
+      "网络下载速度",
+      "电池循环次数",
+      "显卡跑分"
+    ],
+    "answer": "A",
+    "explanation": "msinfo32（系统信息）汇总显示硬件资源、组件和软件环境等信息，是排查软硬件配置的入口之一。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "dxdiag（DirectX诊断工具）主要用于查看什么信息？",
+    "options": [
+      "电源功率",
+      "内存颗粒时序",
+      "DirectX和显卡、声卡的相关诊断信息",
+      "硬盘坏道"
+    ],
+    "answer": "C",
+    "explanation": "dxdiag显示DirectX版本、显卡型号驱动、声卡信息等，游戏显示问题排查时常用，也可保存诊断报告。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "命令devmgmt.msc打开的是哪个管理单元？",
+    "options": [
+      "设备管理器",
+      "服务管理器",
+      "磁盘管理",
+      "任务计划"
+    ],
+    "answer": "A",
+    "explanation": "devmgmt.msc打开设备管理器，可查看和管理所有硬件设备及其驱动状态，黄色感叹号代表驱动异常。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "compmgmt.msc（计算机管理）不包含以下哪个功能？",
+    "options": [
+      "磁盘管理",
+      "设备管理器",
+      "本地用户和组",
+      "网购比价"
+    ],
+    "answer": "D",
+    "explanation": "计算机管理集成了系统工具（事件查看器、设备管理器）、存储（磁盘管理）以及本地用户和组等管理单元。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "resmon命令打开的工具是？",
+    "options": [
+      "注册表编辑器",
+      "命令提示符",
+      "资源监视器",
+      "设备管理器"
+    ],
+    "answer": "C",
+    "explanation": "resmon打开资源监视器，可实时查看CPU、内存、磁盘、网络的详细占用情况，比任务管理器更深入。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "电脑频繁蓝屏重启，想查看系统记录的错误日志，应该打开？",
+    "options": [
+      "控制面板的字体设置",
+      "计算器",
+      "画图工具",
+      "事件查看器（eventvwr）"
+    ],
+    "answer": "D",
+    "explanation": "事件查看器记录系统、安全和应用程序日志，蓝屏、崩溃、服务失败等事件的详细信息都可以在其中查到。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "命令chkdsk D: /r的作用是？",
+    "options": [
+      "检查D盘文件系统并定位修复坏扇区",
+      "格式化D盘",
+      "整理D盘碎片",
+      "把D盘转换为NTFS"
+    ],
+    "answer": "A",
+    "explanation": "chkdsk检查文件系统错误，/r参数额外扫描坏扇区并尝试恢复可读信息；对系统盘运行时会计划在下次重启时执行。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "DISM /Online /Cleanup-Image /RestoreHealth 命令的作用是？",
+    "options": [
+      "清理回收站",
+      "修复Windows组件存储的损坏",
+      "卸载所有应用",
+      "重置网络设置"
+    ],
+    "answer": "B",
+    "explanation": "DISM可以扫描和修复系统组件存储，当sfc /scannow无法修复文件时可先用DISM RestoreHealth修复组件源，再运行sfc。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "环境变量PATH的作用是？",
+    "options": [
+      "指定桌面壁纸位置",
+      "记录系统激活信息",
+      "指定系统查找可执行程序的搜索路径",
+      "保存浏览器书签"
+    ],
+    "answer": "C",
+    "explanation": "在命令行输入命令时，系统按PATH中的目录顺序查找对应程序，把工具所在目录加入PATH后即可在任意位置直接调用。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "把\"文档、下载\"等用户文件夹位置更改到D盘的好处是？",
+    "options": [
+      "提高内存频率",
+      "重装系统（不格式化D盘）时个人文件不易丢失",
+      "让CPU超频更稳定",
+      "减少显示器蓝光"
+    ],
+    "answer": "B",
+    "explanation": "用户文件夹重定向到其他分区后，重装系统只格式化C盘，文档、下载等个人文件保留在D盘，减少数据丢失风险。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "系统盘根目录下的hiberfil.sys文件是什么？",
+    "options": [
+      "休眠功能保存内存数据的文件",
+      "虚拟内存页面文件",
+      "系统日志文件",
+      "驱动备份文件"
+    ],
+    "answer": "A",
+    "explanation": "hiberfil.sys是休眠文件，休眠时内存内容被写入该文件；不用休眠功能可通过关闭休眠来释放与其等大的磁盘空间。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "pagefile.sys文件的作用是？",
+    "options": [
+      "存放系统还原点",
+      "记录激活信息",
+      "存放开机音乐",
+      "作为虚拟内存使用硬盘空间"
+    ],
+    "answer": "D",
+    "explanation": "pagefile.sys是虚拟内存页面文件，物理内存不足时把不活跃数据换出到硬盘，缓解内存压力。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "对于普通用户，虚拟内存（页面文件）的推荐设置方式是？",
+    "options": [
+      "完全禁用以提速",
+      "设置在机械硬盘最内圈",
+      "让系统自动管理",
+      "必须手动设为物理内存的10倍"
+    ],
+    "answer": "C",
+    "explanation": "普通用户交给系统\"自动管理\"即可，Windows会按需调整大小；无特殊需求不建议手动设置或禁用虚拟内存。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "Windows恢复环境（WinRE）中通常不包含以下哪项功能？",
+    "options": [
+      "系统还原",
+      "命令提示符",
+      "启动修复",
+      "在线玩游戏"
+    ],
+    "answer": "D",
+    "explanation": "WinRE提供启动修复、系统还原、系统映像恢复、卸载更新、命令提示符等恢复工具，用于系统无法正常启动时的急救。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "\"启动修复（Startup Repair）\"功能的作用是？",
+    "options": [
+      "自动扫描并修复阻止Windows正常启动的常见问题",
+      "重新安装所有驱动",
+      "清理C盘垃圾文件",
+      "升级Windows版本"
+    ],
+    "answer": "A",
+    "explanation": "启动修复会自动诊断引导文件损坏、系统配置异常等常见启动故障并尝试修复，是系统无法开机时的首选尝试。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "引导记录损坏导致无法进入系统时，可在恢复环境命令行中使用什么命令修复？",
+    "options": [
+      "regedit",
+      "defrag",
+      "msconfig",
+      "bootrec /fixmbr 和 bootrec /fixboot"
+    ],
+    "answer": "D",
+    "explanation": "bootrec系列命令用于重建主引导记录和引导扇区（/fixmbr、/fixboot、/rebuildbcd），是修复引导的常用命令。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "多系统启动菜单的默认系统和等待时间可以在哪里修改？",
+    "options": [
+      "任务管理器的启动选项卡",
+      "系统属性→高级→启动和故障恢复（或msconfig引导选项卡）",
+      "设备管理器",
+      "Windows安全中心"
+    ],
+    "answer": "B",
+    "explanation": "在\"系统属性-高级-启动和故障恢复\"或msconfig的引导选项卡中，可以设置默认操作系统和菜单显示时间。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "Linux中apt install命令属于哪个发行版的包管理方式？",
+    "options": [
+      "Arch Linux的pacman",
+      "CentOS的yum/dnf",
+      "macOS的brew",
+      "Debian/Ubuntu系的apt"
+    ],
+    "answer": "D",
+    "explanation": "apt是Debian、Ubuntu及其衍生版的包管理器，用于安装、更新和卸载软件包；RedHat系使用yum/dnf。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "Linux命令sudo的作用是？",
+    "options": [
+      "以管理员（超级用户）权限执行该命令",
+      "切换到图形界面",
+      "列出目录内容",
+      "关机重启"
+    ],
+    "answer": "A",
+    "explanation": "sudo允许授权用户以root权限执行命令，执行时输入自己的密码，是Linux日常管理的标准方式。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "mc",
+    "question": "Linux文件权限中r、w、x分别代表什么？",
+    "options": [
+      "运行、等待、退出",
+      "读、写、执行",
+      "重命名、移动、复制",
+      "注册、注销、登录"
+    ],
+    "answer": "B",
+    "explanation": "r（read）读、w（write）写、x（execute）执行，分别针对文件所有者、所属组和其他用户三组设置。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "tf",
+    "question": "hiberfil.sys是Windows的虚拟内存页面文件。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "B",
+    "explanation": "hiberfil.sys是休眠文件；虚拟内存页面文件是pagefile.sys，两者不能混淆。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "tf",
+    "question": "Windows更新后反复失败重启，可以进入恢复环境或安全模式卸载最近的更新。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "WinRE和安全模式提供\"卸载更新\"选项，可以移除最近的质量更新或功能更新，解决更新导致的启动失败。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "tf",
+    "question": "对正在使用的系统盘运行chkdsk时，检查会安排在下一次重启时执行。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "系统盘文件正在使用中无法直接锁定检查，chkdsk会询问是否在下次重启时检查，重启时完成扫描。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "tf",
+    "question": "Linux系统中/root目录是管理员（root用户）的主目录。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "/root是超级用户的主目录，普通用户的主目录位于/home/用户名。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "tf",
+    "question": "WSL2允许在Windows中直接运行Linux命令行环境。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "WSL（适用于Windows的Linux子系统）让Windows以轻量虚拟化方式运行真实的Linux发行版，开发和学习都非常方便。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "tf",
+    "question": "Windows家庭版默认可以使用组策略编辑器gpedit.msc。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "B",
+    "explanation": "组策略编辑器是专业版及以上版本的功能，家庭版默认不包含gpedit.msc。"
+  },
+  {
+    "category": "操作系统安装与配置",
+    "q_type": "tf",
+    "question": "系统盘剩余空间过少可能导致系统卡顿、更新失败。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "系统盘需要留有可用空间供虚拟内存、临时文件和更新使用，剩余空间过少会明显影响流畅度和更新安装。"
+  }
+]

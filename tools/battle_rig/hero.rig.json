@@ -1,0 +1,30 @@
+{
+  "_comment": [
+    "勇者（我方）切图骨骼定义。",
+    "坐标全部是 static/battle/hero.png 的原始像素坐标（372x372），y 轴向下。",
+    "seed   : 部件「种子点」，从这个点沿角色轮廓做测地 Voronoi 扩散，决定该部件吞掉哪些像素。",
+    "pivot  : 关节位置 —— 部件绕它旋转。head 绕脖子、armL 绕肩、weapon 绕握把。",
+    "parent : 父部件；null 表示直接挂在角色根节点上。父部件转动时子部件跟随。",
+    "z      : 绘制次序，小的在下方。",
+    "朝向   : 角色面朝屏幕左侧（敌方在左槽位）。armL 是持剑的「前手」。"
+  ],
+  "unit": "hero",
+  "label": "勇者",
+  "source": "static/battle/hero.png",
+  "alphaSeed": 96,
+  "alphaFloor": 30,
+  "bleed": 3,
+  "useBase": true,
+  "weaponArm": "armL",
+  "facing": -1,
+  "leanSign": -1,
+  "armSign": -1,
+  "parts": [
+    { "name": "legR", "parent": null, "seed": [278, 288], "pivot": [248, 244], "z": 1 },
+    { "name": "legL", "parent": null, "seed": [190, 280], "pivot": [200, 240], "z": 2 },
+    { "name": "torso", "parent": null, "seed": [220, 162], "pivot": [216, 240], "z": 3 },
+    { "name": "head", "parent": "torso", "seed": [218, 92], "pivot": [216, 126], "z": 4, "bias": 8 },
+    { "name": "armL", "parent": "torso", "seed": [162, 174], "pivot": [188, 152], "z": 5 },
+    { "name": "weapon", "parent": "armL", "seed": [100, 146], "pivot": [148, 170], "z": 6 }
+  ]
+}

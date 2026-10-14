@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>计算机组装与维护 · 统一考试平台</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2307c160'/%3E%3Cpath d='M16 7l3 6h-6zM9.5 20l2.5-5h8l2.5 5z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/css/app.css">
+<style>
+    body {
+        background:
+            radial-gradient(760px 380px at 15% 5%, rgba(7,193,96,.10), transparent 62%),
+            radial-gradient(760px 380px at 88% 95%, rgba(16,174,255,.09), transparent 62%);
+        min-height: 100vh;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 60px; }
+
+    .hero { text-align: center; padding: 26px 0 8px; }
+    .hero h1 { font-size: 27px; font-weight: 780; letter-spacing: -.4px; }
+    .hero p { color: var(--gray-500); font-size: 14px; margin-top: 8px; }
+
+    .userbar {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 12px; margin-top: 18px; padding: 12px 16px;
+        background: #fff; border-radius: 14px; box-shadow: var(--shadow);
+        border: 1px solid rgba(0,0,0,.03);
+    }
+    .userbar .who { font-weight: 650; font-size: 15px; }
+    .userbar .who small { display: block; font-weight: 400; color: var(--gray-500); font-size: 12.5px; margin-top: 2px; }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 22px; }
+    @media (max-width: 780px) { .grid { grid-template-columns: 1fr; } }
+
+    .mod {
+        background: #fff; border-radius: 18px; padding: 24px 22px 20px;
+        box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,.04);
+        display: flex; flex-direction: column; cursor: pointer;
+        transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .mod:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    .mod .ico {
+        width: 50px; height: 50px; border-radius: 14px; display: flex;
+        align-items: center; justify-content: center; font-size: 24px; margin-bottom: 14px;
+    }
+    .mod h3 { font-size: 17px; font-weight: 720; margin-bottom: 6px; }
+    .mod .desc { color: var(--gray-500); font-size: 13px; line-height: 1.65; flex: 1; }
+    .mod .meta { margin-top: 14px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .mod .go { margin-top: 14px; font-weight: 650; font-size: 14px; color: var(--primary-deep); }
+    .mod.done { border-color: rgba(7,193,96,.35); }
+    .mod.done .go { color: var(--primary-deep); }
+    .mod .go-prac {
+        margin-top: 8px; padding: 9px 10px; border-radius: 10px; cursor: pointer;
+        font-size: 12.5px; font-weight: 500; color: var(--gray-500);
+        background: var(--gray-50); text-align: center;
+    }
+    .mod .go-prac:hover { background: var(--gray-100); color: var(--gray-900); }
+    .mod .go-exam.locked { color: #bbb; cursor: not-allowed; }
+
+    .score-line {
+        margin-top: 10px; font-size: 13px; background: var(--gray-50);
+        border-radius: 10px; padding: 9px 12px; line-height: 1.7;
+    }
+    .score-line b { color: var(--gray-900); }
+
+    .login-card {
+        max-width: 400px; margin: 40px auto 0; background: #fff;
+        border-radius: 20px; box-shadow: var(--shadow-lg); padding: 36px 34px;
+        border: 1px solid rgba(0,0,0,.03);
+    }
+    .login-card h2 { text-align: center; font-size: 21px; font-weight: 750; margin-bottom: 22px; }
+    .tip { background: var(--gray-50); border-radius: 10px; padding: 10px 12px;
+           font-size: 12px; color: var(--gray-500); margin-top: 14px; line-height: 1.65; }
+    .foot { text-align: center; margin-top: 26px; font-size: 12.5px; color: var(--gray-500); }
+    .foot a { color: var(--primary-deep); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="hero">
+        <h1>计算机组装与维护 · 统一考试平台</h1>
+        <p>平时刷题 · BIOS 设置模拟 · WinPE 装机维护模拟</p>
+    </div>
+
+    <!-- ============ 已登录：三模块入口 ============ -->
+    <div id="mainBox" style="display:none">
+        <div class="userbar">
+            <div class="who">
+                <span id="whoName"></span>
+                <small id="whoClass"></small>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+                <span id="regularBadge" class="badge" style="display:none"></span>
+                <button class="btn btn-ghost btn-sm" onclick="logout()">退出</button>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="mod" onclick="go('/')">
+                <div class="ico" style="background:linear-gradient(135deg,#07c160,#05b053);color:#fff">📚</div>
+                <h3>理论刷题</h3>
+                <div class="desc">2200+ 道硬件组装、故障诊断、BIOS/UEFI 题库。正式考试、闯关竞技、错题重练。</div>
+                <div class="meta"><span class="badge">平时分 50%</span></div>
+                <div class="go">进入刷题 →</div>
+            </div>
+
+            <div class="mod" id="modBios">
+                <div class="ico" style="background:linear-gradient(135deg,#0a1622,#1d3a52);color:#5fd0ff">⚙️</div>
+                <h3>BIOS 设置模拟</h3>
+                <div class="desc">Phoenix / Award / AMI / UEFI 四皮肤 1:1 仿真。开机自检、启动项设置、安全启动、密码与保存退出全流程操作。</div>
+                <div class="meta"><span class="badge badge-exam">考试 12.5%</span><span class="badge">20 分钟</span></div>
+                <div class="score-line" id="biosScore" style="display:none"></div>
+                <div class="go go-exam" id="biosGo" onclick="startExam('bios')">开始正式考试 →</div>
+                <div class="go go-prac" onclick="go('/sim/bios?mode=practice')">练习模式（不计分，可换皮肤）</div>
+            </div>
+
+            <div class="mod" id="modWinpe">
+                <div class="ico" style="background:linear-gradient(135deg,#0b2545,#1d4e89);color:#9fd0ff">💽</div>
+                <h3>WinPE 装机维护</h3>
+                <div class="desc">DiskGenius 分区、Windows 安装器、图吧工具箱硬件检测，完整还原 PE 维护环境。</div>
+                <div class="meta"><span class="badge badge-exam">考试 12.5%</span><span class="badge">30 分钟</span></div>
+                <div class="score-line" id="winpeScore" style="display:none"></div>
+                <div class="go go-exam" id="winpeGo" onclick="startExam('winpe')">开始正式考试 →</div>
+                <div class="go go-prac" onclick="go('/sim/winpe?mode=practice')">练习模式（不计分）</div>
+            </div>
+        </div>
+
+        <div class="tip" style="margin-top:20px">
+            <b>考试说明：</b>总评 = 平时分 50%（刷题等级折算）+ 考试分 50%。
+            考试分中，实操装机占 25%（教师现场评分后录入），BIOS 与 WinPE 模拟各占 12.5%（系统按操作步骤自动判定）。
+            两个模拟考试<b>限考 1 次</b>，到时自动交卷，请确认操作完成后再交卷。
+        </div>
+    </div>
+
+    <!-- ============ 未登录：名单登录 ============ -->
+    <div id="loginBox">
+        <div class="login-card">
+            <h2>请选择班级与姓名</h2>
+            <div class="form-group">
+                <label for="selClass">班级</label>
+                <select id="selClass" onchange="loadRoster()">
+                    <option value="">加载中…</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="selName">姓名</label>
+                <select id="selName" disabled>
+                    <option value="">请先选择班级</option>
+                </select>
+            </div>
+            <button class="btn btn-primary btn-lg" style="width:100%" onclick="doLogin()">进 入</button>
+            <p class="error-msg" id="errMsg"></p>
+            <div class="tip">
+                请使用花名册中的真实姓名登录，成绩才会记入本人名下。
+                模拟考试期间请勿切换窗口，系统会记录切屏次数。
+            </div>
+        </div>
+    </div>
+
+    <div class="foot">
+        <a href="/admin">教师入口</a> · 遇到问题请举手示意监考老师
+    </div>
+</div>
+
+<script>
+const LOGGED_IN = {{ 'true' if logged_in else 'false' }};
+
+/* ---------------- 登录 ---------------- */
+async function initClasses() {
+    try {
+        const res = await fetch('/api/classes');
+        const data = await res.json();
+        const sel = document.getElementById('selClass');
+        sel.innerHTML = '<option value="">请选择班级</option>';
+        (data.classes || []).forEach(c => {
+            const name = typeof c === 'string' ? c : (c.class_name || c.name);
+            const o = document.createElement('option');
+            o.value = name; o.textContent = name;
+            sel.appendChild(o);
+        });
+    } catch (e) {
+        document.getElementById('errMsg').textContent = '无法连接服务器，请确认教师机已启动。';
+    }
+}
+
+async function loadRoster() {
+    const cls = document.getElementById('selClass').value;
+    const sel = document.getElementById('selName');
+    sel.disabled = true;
+    sel.innerHTML = '<option value="">加载中…</option>';
+    if (!cls) { sel.innerHTML = '<option value="">请先选择班级</option>'; return; }
+    try {
+        const res = await fetch('/api/roster?class_name=' + encodeURIComponent(cls));
+        const data = await res.json();
+        sel.innerHTML = '<option value="">请选择姓名</option>';
+        (data.students || data.roster || []).forEach(s => {
+            const name = typeof s === 'string' ? s : (s.name || s);
+            const o = document.createElement('option');
+            o.value = name; o.textContent = name;
+            sel.appendChild(o);
+        });
+        sel.disabled = false;
+    } catch (e) {
+        sel.innerHTML = '<option value="">名单加载失败</option>';
+    }
+}
+
+async function doLogin() {
+    const class_name = document.getElementById('selClass').value;
+    const name = document.getElementById('selName').value;
+    const err = document.getElementById('errMsg');
+    err.textContent = '';
+    if (!class_name || !name) { err.textContent = '请选择班级和姓名'; return; }
+    try {
+        const res = await fetch('/login', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, class_name })
+        });
+        const data = await res.json();
+        if (data.success) { location.reload(); }
+        else { err.textContent = data.message || '登录失败'; }
+    } catch (e) { err.textContent = '网络异常，请重试'; }
+}
+
+async function logout() {
+    await fetch('/logout');
+    location.reload();
+}
+
+/* ---------------- 已登录态 ---------------- */
+async function loadMine() {
+    document.getElementById('whoName').textContent = '{{ student_name or "" }}';
+    document.getElementById('whoClass').textContent = '{{ class_name or "" }}';
+
+    // 平时分
+    try {
+        const r = await fetch('/api/profile');
+        const d = await r.json();
+        if (d.success && d.regular_score != null) {
+            const b = document.getElementById('regularBadge');
+            b.style.display = '';
+            b.textContent = '平时分 ' + d.regular_score + ' 分';
+        }
+    } catch (e) { /* 平时分取不到不影响进入模块 */ }
+
+    // 两门模拟考试成绩
+    for (const type of ['bios', 'winpe']) {
+        try {
+            const r = await fetch('/api/sim/result?type=' + type);
+            const d = await r.json();
+            if (d.success && d.in_progress) {
+                showRunning(type);
+            } else if (d.success && d.taken) {
+                const res = d.result;
+                showScore(type, res.normalized, res.switch_count);
+            }
+        } catch (e) { /* 忽略 */ }
+    }
+}
+
+const SIM_LABEL = { bios: 'BIOS 设置模拟', winpe: 'WinPE 装机维护' };
+
+function showScore(type, score, sw) {
+    const box = document.getElementById(type + 'Score');
+    const go = document.getElementById(type + 'Go');
+    const mod = document.getElementById('mod' + type.charAt(0).toUpperCase() + type.slice(1));
+    box.style.display = '';
+    box.innerHTML = '已考：<b>' + score + '</b> 分'
+        + (sw ? '　切屏 ' + sw + ' 次' : '')
+        + '<br><span style="color:var(--gray-500)">限考 1 次，如需重考请联系老师</span>';
+    go.textContent = '已考过，只能练习 →';
+    go.classList.add('locked');
+    go.onclick = function () { go('/sim/' + type + '?mode=practice'); };
+    mod.classList.add('done');
+}
+
+function showRunning(type) {
+    const box = document.getElementById(type + 'Score');
+    const go = document.getElementById(type + 'Go');
+    box.style.display = '';
+    box.innerHTML = '⏳ <b>考试进行中</b>（尚未交卷）'
+        + '<br><span style="color:var(--gray-500)">到时会自动交卷；中途掉线可重新进入继续</span>';
+    go.textContent = '继续考试 →';
+    go.onclick = function () { startExam(type); };
+}
+
+/**
+ * 开始正式考试。
+ * 模拟考试「限考 1 次」且到时自动交卷，因此入口必须有二次确认——
+ * 否则学生只是想点进去看看，就把唯一一次机会用掉了。
+ */
+function startExam(type) {
+    const go = document.getElementById(type + 'Go');
+    if (go && go.classList.contains('locked')) return;
+    if (!confirm('即将开始【' + SIM_LABEL[type] + '】正式考试。\n\n'
+        + '· 本科目限考 1 次，进入后即开始倒计时\n'
+        + '· 中途不要关闭页面，到时自动交卷\n'
+        + '· 只是想练手请点「练习模式（不计分）」\n\n'
+        + '确定现在开始吗？')) {
+        return;
+    }
+    location.href = '/sim/' + type;
+}
+
+function go(url) { location.href = url; }
+
+if (LOGGED_IN) {
+    document.getElementById('mainBox').style.display = '';
+    document.getElementById('loginBox').style.display = 'none';
+    loadMine();
+} else {
+    initClasses();
+}
+</script>
+</body>
+</html>

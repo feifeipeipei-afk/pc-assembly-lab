@@ -1,0 +1,417 @@
+[
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "主板的BIOS/UEFI程序存放在什么芯片中？",
+    "options": [
+      "可电擦写的闪存（Flash ROM）芯片，因此可以刷新升级",
+      "CPU缓存里",
+      "内存条上",
+      "硬盘的隐藏分区里"
+    ],
+    "answer": "A",
+    "explanation": "BIOS程序保存在主板上的Flash ROM芯片中，可通过工具刷新更新；部分主板还有芯片级备份（双BIOS）。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "\"双BIOS\"设计的主板好处是？",
+    "options": [
+      "开机速度翻倍",
+      "主BIOS刷新失败损坏时，可切换到备份BIOS启动救砖",
+      "可以同时装两个系统",
+      "内存频率翻倍"
+    ],
+    "answer": "B",
+    "explanation": "双BIOS主板有两颗固件芯片，主BIOS刷坏后可以用备份芯片启动并修复，大大降低刷新风险。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "主板上的\"BIOS Flashback（一键刷BIOS）\"按钮的便利之处是？",
+    "options": [
+      "玩游戏更流畅",
+      "不需要CPU和内存，仅接电源和U盘即可刷新BIOS",
+      "一键超频CPU",
+      "一键重装系统"
+    ],
+    "answer": "B",
+    "explanation": "BIOS Flashback由主板独立电路完成刷新，点亮都点不亮的新板也能先用它升级固件以支持新CPU，装机利器。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "主板上的Q-LED诊断灯（CPU/DRAM/VGA/BOOT）亮起时表示？",
+    "options": [
+      "对应的硬件在自检中卡住，例如DRAM灯常亮提示内存问题",
+      "灯亮的设备工作正常",
+      "电脑即将重启",
+      "需要更换主板电池"
+    ],
+    "answer": "A",
+    "explanation": "开机时卡在哪个环节，对应的LED就停留在常亮状态，如DRAM灯亮先重插内存、VGA灯亮查显卡，是排障的直观指示。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "CPU频率=外频（BCLK）×倍频，其中\"倍频\"指的是？",
+    "options": [
+      "内存的时序参数",
+      "CPU内部主频相对基准时钟的倍数，多数处理器只允许向下锁或有限调整",
+      "显卡的显存频率",
+      "电源转换效率"
+    ],
+    "answer": "B",
+    "explanation": "CPU主频由基准时钟乘以倍频得到，带K/X后缀的CPU倍频 unlocked 可向上超，普通锁倍频处理器只能降频节能。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "在BIOS中大幅提高CPU核心电压的主要风险是？",
+    "options": [
+      "没有任何风险",
+      "发热剧增，超过安全范围可能永久损坏CPU",
+      "只影响开机速度",
+      "让硬盘变慢"
+    ],
+    "answer": "B",
+    "explanation": "电压是超频中最危险的参数，过高会导致发热失控和电迁移，可能造成不可逆损坏，调整应小幅递增并控制温度。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "Intel平台的PL1/PL2功耗设置的含义是？",
+    "options": [
+      "内存的两种频率档位",
+      "PL1是持续功耗上限，PL2是短时爆发允许的更高功耗上限",
+      "电源的两路输出",
+      "风扇的两级转速"
+    ],
+    "answer": "B",
+    "explanation": "PL1（长时功耗墙）决定持续性能，PL2（短时功耗墙）允许短时间冲高；调整它们可以释放或限制CPU性能。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "AMD平台的PBO（Precision Boost Overdrive）是什么功能？",
+    "options": [
+      "让锐龙处理器在温度电流允许范围内更激进地自动加速",
+      "内存错误校验",
+      "主板蓝牙开关",
+      "硬盘阵列设置"
+    ],
+    "answer": "A",
+    "explanation": "PBO是AMD的自动超频增强，放宽频率提升的功耗/温度限制以获得更高睿频，通常配合良好的散热使用。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "BIOS中的Resizable BAR功能开启后可以？",
+    "options": [
+      "让CPU一次性访问显卡全部显存，在支持的游戏中提升些许性能",
+      "扩大内存容量",
+      "提高硬盘转速",
+      "改善WiFi信号"
+    ],
+    "answer": "A",
+    "explanation": "传统方式CPU每次只能访问显存的一小段窗口，Resizable BAR放开此限制，配合RTX 30系以后显卡在部分游戏中可提升数个百分点。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "\"Above 4G Decoding\"选项的作用是？",
+    "options": [
+      "增加USB接口数量",
+      "调整风扇曲线",
+      "启用超大显存地址空间解码，开启Resizable BAR等新特性通常需要先打开它",
+      "关闭核显"
+    ],
+    "answer": "C",
+    "explanation": "开启Above 4G Decoding后，设备的大容量地址空间（超过4GB）才能被正确映射，是使用Resizable BAR和新显卡的前提之一。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "BIOS中的ErP设置开启后，关机状态下的变化是？",
+    "options": [
+      "关机后USB接口不再供电，待机功耗更低",
+      "开机速度变快",
+      "风扇转速提高",
+      "内存频率降低"
+    ],
+    "answer": "A",
+    "explanation": "ErP是节能规范，开启后关机时USB口、网卡唤醒等供电被切断，更省电，但想用关机充电、网络唤醒就需关闭它。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "Wake on LAN（网络唤醒）功能的作用是？",
+    "options": [
+      "提高网速",
+      "让手机流量共享给电脑",
+      "更换网卡MAC地址",
+      "通过局域网发送魔术数据包远程唤醒关机的电脑"
+    ],
+    "answer": "D",
+    "explanation": "WoL需要主板和网卡支持并在BIOS开启，之后在同一局域网内用手机或其它电脑发魔术包即可远程开机，方便远程办公。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "BIOS中的\"RTC定时开机\"设置可以实现什么？",
+    "options": [
+      "电脑在设定的日期时间自动开机",
+      "定时重启路由器",
+      "定时清理硬盘",
+      "定时给手机充电"
+    ],
+    "answer": "A",
+    "explanation": "RTC Alarm让主板在设定时刻自动通电开机，配合系统任务可实现定时备份、录制等自动化场景。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "电源设置中的\"来电自启（After Power Loss）\"选项用于？",
+    "options": [
+      "美化开机画面",
+      "断电恢复供电后电脑自动开机，适合服务器和远程管理场景",
+      "提高电源功率",
+      "检测电网频率"
+    ],
+    "answer": "B",
+    "explanation": "该选项决定停电再来电后主板的行为（保持关机/开机/上次状态），无人值守的服务器、监控主机常设为自动开机。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "部分显卡/电源宣传的\"风扇停转（0dB）技术\"是指？",
+    "options": [
+      "风扇坏了不转",
+      "低负载时风扇完全停转，零噪音，温度升高后再启动",
+      "风扇永远不转",
+      "风扇只能全速转"
+    ],
+    "answer": "B",
+    "explanation": "0dB技术在低负载低温时停转风扇实现静音，负载温度上来后自动启动散热，兼顾安静与散热。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "BIOS/UEFI中的CPU关机保护温度（如设定100℃）的作用是？",
+    "options": [
+      "温度达到阈值时强制关机保护硬件",
+      "温度达到时打开空调",
+      "温度达到时提高风扇灯光亮度",
+      "温度达到时清空硬盘"
+    ],
+    "answer": "A",
+    "explanation": "为防止烧毁，达到保护温度时主板会触发降频直至强制关机；若机器频繁热保护关机，应立即检查散热。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "新装机或换内存后第一次开机，主板自检时间明显变长，比较可能的原因是？",
+    "options": [
+      "硬盘在格式化",
+      "UEFI正在进行内存训练（Memory Training）配置参数，属正常现象",
+      "系统在更新",
+      "网卡在下载驱动"
+    ],
+    "answer": "B",
+    "explanation": "内存训练要为当前内存的频率时序优化信号参数，可能黑屏数十秒甚至更久，训练完成保存后开机恢复正常速度。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "刷新主板BIOS前，下载固件文件的正确渠道是？",
+    "options": [
+      "任意论坛网盘",
+      "二手交易网站",
+      "主板厂商官网对应\"具体主板型号\"的支持页面",
+      "显卡官网"
+    ],
+    "answer": "C",
+    "explanation": "BIOS必须与主板精确型号（含版本号）匹配，刷错型号会变砖；只从主板官网下载，并按官方说明操作。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "BIOS中\"Num Lock开机状态\"选项控制的是？",
+    "options": [
+      "开机后数字小键盘是否自动启用",
+      "系统音量大小",
+      "风扇转速",
+      "屏幕亮度"
+    ],
+    "answer": "A",
+    "explanation": "该选项决定开机进系统后数字小键盘区默认是否启用，常输数字密码或做表格的用户一般设为开启。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "许多UEFI图形界面支持把显示语言设置为？",
+    "options": [
+      "只能英文",
+      "摩斯密码",
+      "机器语言",
+      "简体中文等多语言"
+    ],
+    "answer": "D",
+    "explanation": "UEFI图形化固件普遍内置多语言包，可在设置中切换简体中文，方便不熟悉英文术语的用户操作。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "使用核显时，BIOS里的\"核显显存分配（DVMT/iGPU Memory）\"设置影响什么？",
+    "options": [
+      "分给核显的系统内存容量",
+      "硬盘分区数量",
+      "USB供电功率",
+      "网卡速率"
+    ],
+    "answer": "A",
+    "explanation": "核显没有独立显存，需从系统内存中划分一块作为显存使用；分配过小可能影响视频处理和游戏表现。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "安装独立显卡后，在BIOS中把核显设为禁用的常见目的是？",
+    "options": [
+      "省电并避免资源占用与输出冲突",
+      "提高机械硬盘转速",
+      "让内存频率翻倍",
+      "屏蔽USB接口"
+    ],
+    "answer": "A",
+    "explanation": "不用核显时禁用可避免其占用内存和中断资源，也避免显示器插错输出；需要多屏或核显加速（如转码）时再开启。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "部分主板可以把x16插槽\"拆分\"为x8+x8模式，这主要是为谁准备的？",
+    "options": [
+      "双显卡/多卡（含计算卡）用户，两条插槽各得8条通道",
+      "机械键盘",
+      "单块显卡提速",
+      "声卡"
+    ],
+    "answer": "A",
+    "explanation": "CPU的PCIe通道总数固定，拆分x8+x8让两条插槽同时工作，双显卡交火或显卡+采集卡/加速卡的场景会用到。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "机箱喇叭（SPEAKER）4pin跳线接到主板后可以？",
+    "options": [
+      "播放音乐",
+      "在自检报错时发出蜂鸣报警声，辅助诊断故障",
+      "给手机充电",
+      "提高网速"
+    ],
+    "answer": "B",
+    "explanation": "机箱喇叭用于开机自检的蜂鸣代码（如内存报警一长两短），没有屏幕输出时它是判断故障的重要途径。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "启动设备列表中的\"Windows Boot Manager\"指的是？",
+    "options": [
+      "一个U盘",
+      "Windows引导管理器（通常位于EFI系统分区），UEFI方式启动Windows就选它",
+      "主板芯片组",
+      "网卡设备"
+    ],
+    "answer": "B",
+    "explanation": "UEFI+GPT安装的Windows会注册Windows Boot Manager启动项，选它即通过UEFI引导Windows，而不是直接选某块硬盘。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "mc",
+    "question": "BIOS启动选项中的PXE启动（网络引导）常用于什么场景？",
+    "options": [
+      "网吧/机房无盘系统、批量网络部署系统",
+      "播放蓝光电影",
+      "给手机刷机",
+      "提高游戏帧率"
+    ],
+    "answer": "A",
+    "explanation": "PXE让电脑开机从网络上的服务器获取引导文件，广泛用于无盘网吧、机房批量装系统和集群部署。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "tf",
+    "question": "开启Resizable BAR后，所有游戏都能获得明显性能提升。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "B",
+    "explanation": "Resizable BAR只在部分适配的游戏中有数个百分点的提升，很多游戏毫无变化，并非万能提速开关。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "tf",
+    "question": "使用PXE网络启动需要局域网中存在提供引导服务的服务器。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "PXE客户端从网络上的DHCP/TFTP服务器获取引导文件，没有服务端配合就无法网络引导。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "tf",
+    "question": "台式机上断开CMOS电池放电，通常可以清除用户设置的BIOS密码。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "BIOS用户密码保存在CMOS中，断电池或短接CLR_CMOS跳线清空CMOS即可清除（忘记密码的常用自救方法）。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "tf",
+    "question": "关闭Secure Boot功能可能会降低系统启动环节的安全性。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "Secure Boot校验引导文件签名，防止恶意引导程序；关闭它是为兼容旧系统或某些驱动，平时建议保持开启。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "tf",
+    "question": "超频时提高CPU电压会明显增加发热量。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "功耗与电压平方近似成正比，加压带来的发热增长非常明显，超频后必须同步加强散热并监控温度。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "tf",
+    "question": "使用Wake on LAN远程唤醒功能需要主板和网卡都支持，并在BIOS中开启。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "WoL是软硬件配合的功能：主板支持、BIOS开启、网卡（含关机供电）支持，缺一不可。"
+  },
+  {
+    "category": "BIOS/UEFI与固件",
+    "q_type": "tf",
+    "question": "更新主板BIOS有可能改善对新CPU、新内存的兼容性和稳定性。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "answer": "A",
+    "explanation": "新BIOS常更新CPU微码和内存参数（IME/QVL列表），新装的新平台点不亮或内存不稳时，升级BIOS是标准解法。"
+  }
+]

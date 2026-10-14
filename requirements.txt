@@ -1,0 +1,10 @@
+flask>=2.3.0
+openpyxl>=3.1.0
+
+# 运行测试需要
+pytest>=8.0
+
+# 运行 UI 冒烟脚本需要（smoke_battle_ui.py / smoke_battle_render.py）
+playwright>=1.40
+# 图像处理：战斗资源构建（切图/图集）与冒烟脚本的像素校验
+pillow>=10.0

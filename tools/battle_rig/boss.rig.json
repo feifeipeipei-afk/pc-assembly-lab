@@ -1,0 +1,26 @@
+{
+  "_comment": [
+    "魔王（敌方）切图骨骼定义。坐标是 static/battle/boss.png 的原始像素坐标，y 轴向下。",
+    "朝向：正脸略带侧，火焰巨剑向屏幕右下伸出（敌方在左槽位，剑指向我方）。",
+    "armR 是持剑的右臂；武器挂在 armR 之下，随肩挥动。"
+  ],
+  "unit": "boss",
+  "label": "魔王",
+  "source": "static/battle/boss.png",
+  "alphaSeed": 96,
+  "alphaFloor": 30,
+  "bleed": 3,
+  "useBase": true,
+  "weaponArm": "armR",
+  "facing": 1,
+  "leanSign": 1,
+  "armSign": -1,
+  "parts": [
+    { "name": "legR", "parent": null, "seed": [182, 322], "pivot": [152, 282], "z": 1 },
+    { "name": "legL", "parent": null, "seed": [66, 318], "pivot": [78, 278], "z": 2 },
+    { "name": "torso", "parent": null, "seed": [106, 180], "pivot": [108, 262], "z": 3 },
+    { "name": "head", "parent": "torso", "seed": [136, 40], "pivot": [132, 96], "z": 4 },
+    { "name": "armR", "parent": "torso", "seed": [192, 212], "pivot": [172, 206], "z": 5 },
+    { "name": "weapon", "parent": "armR", "seed": [268, 272], "pivot": [206, 238], "z": 6 }
+  ]
+}

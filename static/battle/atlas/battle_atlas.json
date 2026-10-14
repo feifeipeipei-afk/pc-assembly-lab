@@ -1,0 +1,583 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-13 20:38:02",
+  "generator": "tools/build_battle_assets.py",
+  "atlas": {
+    "image": "static/battle/atlas/battle_atlas.png",
+    "url": "/static/battle/atlas/battle_atlas.png",
+    "width": 1024,
+    "height": 1024
+  },
+  "unitBox": 200,
+  "units": {
+    "boss": {
+      "label": "魔王",
+      "source": "static/battle/boss.png",
+      "sourceSize": [
+        372,
+        372
+      ],
+      "anchor": [
+        186.0,
+        363.0
+      ],
+      "trim": [
+        31,
+        9,
+        344,
+        363
+      ],
+      "bleed": 3,
+      "pad": 4,
+      "weaponArm": "armR",
+      "facing": 1,
+      "leanSign": 1,
+      "armSign": -1,
+      "parts": [
+        {
+          "name": "__base",
+          "parent": null,
+          "pivot": [
+            0,
+            0
+          ],
+          "rect": [
+            27,
+            5,
+            321,
+            362
+          ],
+          "z": -1,
+          "isBase": true,
+          "region": [
+            0,
+            0,
+            321,
+            362
+          ]
+        },
+        {
+          "name": "legR",
+          "parent": null,
+          "pivot": [
+            152,
+            282
+          ],
+          "rect": [
+            120,
+            257,
+            113,
+            105
+          ],
+          "z": 1,
+          "seed": [
+            182,
+            322
+          ],
+          "region": [
+            903,
+            362,
+            113,
+            105
+          ]
+        },
+        {
+          "name": "legL",
+          "parent": null,
+          "pivot": [
+            78,
+            278
+          ],
+          "rect": [
+            27,
+            234,
+            108,
+            133
+          ],
+          "z": 2,
+          "seed": [
+            66,
+            318
+          ],
+          "region": [
+            0,
+            362,
+            108,
+            133
+          ]
+        },
+        {
+          "name": "torso",
+          "parent": null,
+          "pivot": [
+            108,
+            262
+          ],
+          "rect": [
+            31,
+            87,
+            154,
+            179
+          ],
+          "z": 3,
+          "seed": [
+            106,
+            180
+          ],
+          "region": [
+            777,
+            0,
+            154,
+            179
+          ]
+        },
+        {
+          "name": "head",
+          "parent": "torso",
+          "pivot": [
+            132,
+            96
+          ],
+          "rect": [
+            31,
+            5,
+            154,
+            120
+          ],
+          "z": 4,
+          "seed": [
+            136,
+            40
+          ],
+          "region": [
+            429,
+            362,
+            154,
+            120
+          ]
+        },
+        {
+          "name": "armR",
+          "parent": "torso",
+          "pivot": [
+            172,
+            206
+          ],
+          "rect": [
+            119,
+            143,
+            131,
+            132
+          ],
+          "z": 5,
+          "seed": [
+            192,
+            212
+          ],
+          "region": [
+            108,
+            362,
+            131,
+            132
+          ]
+        },
+        {
+          "name": "weapon",
+          "parent": "armR",
+          "pivot": [
+            206,
+            238
+          ],
+          "rect": [
+            203,
+            217,
+            145,
+            103
+          ],
+          "z": 6,
+          "seed": [
+            268,
+            272
+          ],
+          "region": [
+            0,
+            495,
+            145,
+            103
+          ]
+        }
+      ]
+    },
+    "dummy": {
+      "label": "训练假人",
+      "source": "static/battle/dummy.png",
+      "sourceSize": [
+        372,
+        372
+      ],
+      "anchor": [
+        186.0,
+        330.0
+      ],
+      "trim": [
+        117,
+        60,
+        279,
+        330
+      ],
+      "bleed": 3,
+      "pad": 4,
+      "weaponArm": null,
+      "facing": 1,
+      "leanSign": 1,
+      "armSign": 1,
+      "parts": [
+        {
+          "name": "__base",
+          "parent": null,
+          "pivot": [
+            0,
+            0
+          ],
+          "rect": [
+            113,
+            56,
+            170,
+            278
+          ],
+          "z": -1,
+          "isBase": true,
+          "region": [
+            321,
+            0,
+            170,
+            278
+          ]
+        },
+        {
+          "name": "post",
+          "parent": null,
+          "pivot": [
+            172,
+            228
+          ],
+          "rect": [
+            144,
+            207,
+            68,
+            127
+          ],
+          "z": 1,
+          "seed": [
+            170,
+            278
+          ],
+          "region": [
+            361,
+            362,
+            68,
+            127
+          ]
+        },
+        {
+          "name": "torso",
+          "parent": null,
+          "pivot": [
+            172,
+            228
+          ],
+          "rect": [
+            131,
+            105,
+            88,
+            120
+          ],
+          "z": 2,
+          "seed": [
+            172,
+            150
+          ],
+          "region": [
+            583,
+            362,
+            88,
+            120
+          ]
+        },
+        {
+          "name": "armL",
+          "parent": "torso",
+          "pivot": [
+            152,
+            138
+          ],
+          "rect": [
+            113,
+            111,
+            56,
+            119
+          ],
+          "z": 3,
+          "seed": [
+            126,
+            160
+          ],
+          "region": [
+            671,
+            362,
+            56,
+            119
+          ]
+        },
+        {
+          "name": "armR",
+          "parent": "torso",
+          "pivot": [
+            196,
+            136
+          ],
+          "rect": [
+            202,
+            107,
+            81,
+            96
+          ],
+          "z": 4,
+          "seed": [
+            246,
+            152
+          ],
+          "region": [
+            145,
+            495,
+            81,
+            96
+          ]
+        },
+        {
+          "name": "head",
+          "parent": "torso",
+          "pivot": [
+            172,
+            116
+          ],
+          "rect": [
+            153,
+            56,
+            49,
+            63
+          ],
+          "z": 5,
+          "seed": [
+            172,
+            78
+          ],
+          "region": [
+            302,
+            495,
+            49,
+            63
+          ]
+        }
+      ]
+    },
+    "hero": {
+      "label": "勇者",
+      "source": "static/battle/hero.png",
+      "sourceSize": [
+        372,
+        372
+      ],
+      "anchor": [
+        186.0,
+        318.0
+      ],
+      "trim": [
+        37,
+        70,
+        315,
+        318
+      ],
+      "bleed": 3,
+      "pad": 4,
+      "weaponArm": "armL",
+      "facing": -1,
+      "leanSign": -1,
+      "armSign": -1,
+      "parts": [
+        {
+          "name": "__base",
+          "parent": null,
+          "pivot": [
+            0,
+            0
+          ],
+          "rect": [
+            33,
+            66,
+            286,
+            256
+          ],
+          "z": -1,
+          "isBase": true,
+          "region": [
+            491,
+            0,
+            286,
+            256
+          ]
+        },
+        {
+          "name": "legR",
+          "parent": null,
+          "pivot": [
+            248,
+            244
+          ],
+          "rect": [
+            228,
+            206,
+            91,
+            116
+          ],
+          "z": 1,
+          "seed": [
+            278,
+            288
+          ],
+          "region": [
+            727,
+            362,
+            91,
+            116
+          ]
+        },
+        {
+          "name": "legL",
+          "parent": null,
+          "pivot": [
+            200,
+            240
+          ],
+          "rect": [
+            153,
+            208,
+            85,
+            107
+          ],
+          "z": 2,
+          "seed": [
+            190,
+            280
+          ],
+          "region": [
+            818,
+            362,
+            85,
+            107
+          ]
+        },
+        {
+          "name": "torso",
+          "parent": null,
+          "pivot": [
+            216,
+            240
+          ],
+          "rect": [
+            175,
+            109,
+            122,
+            130
+          ],
+          "z": 3,
+          "seed": [
+            220,
+            162
+          ],
+          "region": [
+            239,
+            362,
+            122,
+            130
+          ]
+        },
+        {
+          "name": "head",
+          "parent": "torso",
+          "pivot": [
+            216,
+            126
+          ],
+          "rect": [
+            182,
+            66,
+            76,
+            63
+          ],
+          "z": 4,
+          "seed": [
+            218,
+            92
+          ],
+          "region": [
+            226,
+            495,
+            76,
+            63
+          ]
+        },
+        {
+          "name": "armL",
+          "parent": "torso",
+          "pivot": [
+            188,
+            152
+          ],
+          "rect": [
+            115,
+            135,
+            86,
+            57
+          ],
+          "z": 5,
+          "seed": [
+            162,
+            174
+          ],
+          "region": [
+            459,
+            495,
+            86,
+            57
+          ]
+        },
+        {
+          "name": "weapon",
+          "parent": "armL",
+          "pivot": [
+            148,
+            170
+          ],
+          "rect": [
+            33,
+            118,
+            108,
+            61
+          ],
+          "z": 6,
+          "seed": [
+            100,
+            146
+          ],
+          "region": [
+            351,
+            495,
+            108,
+            61
+          ]
+        }
+      ]
+    }
+  }
+}

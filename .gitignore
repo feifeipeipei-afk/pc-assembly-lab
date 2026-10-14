@@ -1,0 +1,43 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+
+.env
+.venv/
+venv/
+
+quiz_app.db
+quiz_app.db-shm
+quiz_app.db-wal
+.secret_key
+
+# 战斗渲染冒烟脚本用的独立测试库
+quiz_smoke_render.db
+quiz_smoke_render.db-shm
+quiz_smoke_render.db-wal
+
+.pytest_cache/
+
+.playwright-cli/
+output/
+.trae/
+
+*.log
+
+# ===== 以下为提交 GitHub 前的隐私与整洁规则 =====
+
+# 含学生姓名/成绩的数据库备份，严禁提交
+*.bak-*
+
+# 早期嵌套的旧版本副本（非当前代码）
+quiz-app-main/
+
+# 开发过程截图与草稿脚本
+.cmp*.png
+.segzoom*.png
+smoke_*.png
+.analyse*.py
+.segzoom.py
+
+# AI 协作内部草稿目录
+.superpowers/
